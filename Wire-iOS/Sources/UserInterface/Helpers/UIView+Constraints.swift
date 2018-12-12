@@ -37,6 +37,10 @@ struct EdgeInsets {
 }
 
 extension UIView {
+    @discardableResult func fitInSuperview(safely: Bool = false, withTrailingInsets trailing: CGFloat) -> [NSLayoutConstraint] {
+        return fitInSuperview(safely: safely, with: EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: trailing))
+    }
+
     @discardableResult func fitInSuperview(safely: Bool = false, with insets: EdgeInsets = .zero) -> [NSLayoutConstraint] {
         guard let superview = self.superview else {
             fatal("Not in view hierarchy: self.superview = nil")

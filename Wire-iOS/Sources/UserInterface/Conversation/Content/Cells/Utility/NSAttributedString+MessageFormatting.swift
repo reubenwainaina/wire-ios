@@ -22,6 +22,22 @@ import WireExtensionComponents
 import WireLinkPreview
 import WireUtilities
 
+struct PollOption: Codable {
+    let name: String
+    let percent: Double
+    let color: String
+}
+
+struct Poll: Codable {
+    let options: [PollOption]
+    let question: String
+}
+
+extension Poll {
+    var attributtedQuestion: NSAttributedString {
+        return NSMutableAttributedString.markdown(from: question, style: NSAttributedString.defaultMarkdownStyle())
+    }
+}
 
 extension NSAttributedString {
     
@@ -133,7 +149,20 @@ extension NSAttributedString {
         markdownText.addAttribute(.foregroundColor, value: UIColor.from(scheme: .textForeground, variant: variant), range: NSRange(location: 0, length: markdownText.length))
         return markdownText
     }
-    
+
+    static func findPoll(message: ZMTextMessageData) -> Poll? {
+        let plainText = message.messageText ?? ""
+
+        guard plainText.hasPrefix("[POLL]{") else {
+            return nil
+        }
+
+        let jsonData = Data(plainText.utf8.dropFirst(6))
+        let decoder = JSONDecoder()
+
+        return try? decoder.decode(Poll.self, from: jsonData)
+    }
+
     @objc
     static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment?>?) -> NSAttributedString {
         

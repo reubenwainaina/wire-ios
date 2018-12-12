@@ -162,6 +162,9 @@ extension ConversationTextMessageCellDescription {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
+        // Finding polls
+        // TODO: Return the correct cells when we detect a poll
+
         // Text parsing
 
         var lastKnownLinkAttachment: LinkAttachment?

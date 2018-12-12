@@ -291,6 +291,7 @@
 		5E8C38B6212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */; };
 		5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */; };
 		5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */; };
+		5E8CAC0921C1426E00559C42 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8CAC0821C1426E00559C42 /* PollView.swift */; };
 		5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */; };
 		5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */; };
 		5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */; };
@@ -367,6 +368,8 @@
 		5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
 		5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
 		5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */; };
+		5ED6221621C1869800CD08EA /* ConversationPollMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED6221521C1869800CD08EA /* ConversationPollMessageCell.swift */; };
+		5ED6221821C1879300CD08EA /* ConversationPollMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED6221721C1879200CD08EA /* ConversationPollMessageCellTests.swift */; };
 		5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */; };
 		5EDD253A213FFD9700C0E254 /* Licenses.generated.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */; };
 		5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD253B2140044D00C0E254 /* SettingsLicenseItem.swift */; };
@@ -1800,6 +1803,7 @@
 		5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationViewControllerTests.swift; sourceTree = "<group>"; };
 		5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSessionManager.swift; sourceTree = "<group>"; };
 		5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateController.swift; sourceTree = "<group>"; };
+		5E8CAC0821C1426E00559C42 /* PollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
 		5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandler.swift; sourceTree = "<group>"; };
 		5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorAction.swift; sourceTree = "<group>"; };
 		5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatusProvider.swift; sourceTree = "<group>"; };
@@ -1874,6 +1878,8 @@
 		5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReplyCellDescriptionTests.swift; sourceTree = "<group>"; };
 		5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioning.swift; sourceTree = "<group>"; };
 		5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioningContext.swift; sourceTree = "<group>"; };
+		5ED6221521C1869800CD08EA /* ConversationPollMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPollMessageCell.swift; sourceTree = "<group>"; };
+		5ED6221721C1879200CD08EA /* ConversationPollMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPollMessageCellTests.swift; sourceTree = "<group>"; };
 		5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SLComposeServiceViewController+Preview.swift"; sourceTree = "<group>"; };
 		5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Licenses.generated.plist; sourceTree = "<group>"; };
 		5EDD253B2140044D00C0E254 /* SettingsLicenseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLicenseItem.swift; sourceTree = "<group>"; };
@@ -3879,6 +3885,7 @@
 				5E35F77D218300D400D3F4FE /* ConversationLinkPreviewArticleCell.swift */,
 				5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */,
 				5E15D31A219DB9060038439D /* ConversationFileMessageCell.swift */,
+				5ED6221521C1869800CD08EA /* ConversationPollMessageCell.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -3886,6 +3893,7 @@
 		5E4BC1C2218A0B1F00A8682E /* Rich Content */ = {
 			isa = PBXGroup;
 			children = (
+				5E8CAC0821C1426E00559C42 /* PollView.swift */,
 				5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */,
 				5E35F785218340EB00D3F4FE /* ConversationLocationMessageCell.swift */,
 				162AE749219D854100581D98 /* ConversationImageMessageCell.swift */,
@@ -6008,6 +6016,7 @@
 				EFF92B6A21A863700090DA66 /* PhoneNumberViewControllerSnapshotTests.swift */,
 				5E769C5521AD8ABD00785EB7 /* DismissalTests.swift */,
 				5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */,
+				5ED6221721C1879200CD08EA /* ConversationPollMessageCellTests.swift */,
 				5E53533F21B05BF60060DB38 /* MessageDetails */,
 			);
 			path = "Wire-iOS Tests";
@@ -7372,6 +7381,7 @@
 				EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */,
 				7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */,
 				871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */,
+				5E8CAC0921C1426E00559C42 /* PollView.swift in Sources */,
 				BFFA182820FDE22B00F64377 /* UIAlertController+CompanyLogin.swift in Sources */,
 				F16427001FCC5B3C00D2ABFC /* SetTeamNameStepDescription.swift in Sources */,
 				1E6579981B8F3632002E0869 /* UIImage+ZetaIconsNeue.m in Sources */,
@@ -7906,6 +7916,7 @@
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
 				5E8C38AE212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift in Sources */,
 				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
+				5ED6221621C1869800CD08EA /* ConversationPollMessageCell.swift in Sources */,
 				BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
 				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,
@@ -8278,6 +8289,7 @@
 				EFAFCA8D213433D7002B31A6 /* ConversationListViewControllerTests.swift in Sources */,
 				F1CB5D29215A3108001CCF5D /* MentionsHandlerTests.swift in Sources */,
 				BACB88561AF7C48900DDCDB0 /* AggregateArrayTests.m in Sources */,
+				5ED6221821C1879300CD08EA /* ConversationPollMessageCellTests.swift in Sources */,
 				7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */,
 				EF0D9972205BC74F002D488E /* NetworkStatusViewControllerSnapshotTests.swift in Sources */,
 				7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */,
