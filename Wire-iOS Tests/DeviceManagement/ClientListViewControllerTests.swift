@@ -95,9 +95,9 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
-        verifyInIPhoneSize(view: navWrapperController.view,
-                           configuration:{ _ in
-                            self.sut.clientsTableView?.contentOffset = CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude)
+        verify(view: navWrapperController.view,
+               configuration:{ _ in
+                self.sut.clientsTableView?.scrollToRow(at: IndexPath(row:6, section: 1), at: .bottom, animated: false)
         })
     }
 
