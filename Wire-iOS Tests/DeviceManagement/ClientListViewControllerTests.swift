@@ -34,6 +34,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
         selfClient = mockUserClient()
         client = mockUserClient()
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -90,12 +92,15 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: sut.view)
     }
 
-    func testForLightThemeWrappedInNavigationController(){
-        prepareSut(variant: .light)
+    func testForLightThemeWrappedInNavigationControllerAndScrollToBottom(){
+        prepareSut(variant: .light, numberOfClients: 7)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
-        self.verify(view: navWrapperController.view)
+        verifyInIPhoneSize(view: navWrapperController.view,
+                           configuration:{ _ in
+                            self.sut.clientsTableView?.contentOffset = CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude)
+        })
     }
 
     func testForOneDeviceWithNoEditButton(){

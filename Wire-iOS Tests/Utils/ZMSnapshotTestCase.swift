@@ -262,6 +262,7 @@ extension ZMSnapshotTestCase {
                 tolerance: CGFloat = 0,
                 identifier: String? = nil,
                 deviceName: String? = nil,
+                configuration: Configuration? = nil,
                 file: StaticString = #file,
                 line: UInt = #line
         ) {
@@ -286,6 +287,8 @@ extension ZMSnapshotTestCase {
             }
         }
 
+        configuration?(view)
+
         if extraLayoutPass {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
@@ -306,7 +309,7 @@ extension ZMSnapshotTestCase {
                     extraLayoutPass: Bool = false,
                     width: CGFloat,
                     tolerance: CGFloat = 0,
-                    configuration: ((UIView) -> Swift.Void)? = nil,
+                    configuration: Configuration? = nil,
                     file: StaticString = #file,
                     line: UInt = #line
         ) {
@@ -343,7 +346,7 @@ extension ZMSnapshotTestCase {
     func verifyInAllPhoneWidths(view: UIView,
                                 extraLayoutPass: Bool = false,
                                 tolerance: CGFloat = 0,
-                                configuration: ((UIView) -> Swift.Void)? = nil,
+                                configuration: Configuration? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
@@ -360,7 +363,7 @@ extension ZMSnapshotTestCase {
 
     func verifyInAllTabletWidths(view: UIView,
                                  extraLayoutPass: Bool = false,
-                                 configuration: ((UIView) -> Swift.Void)? = nil,
+                                 configuration: Configuration? = nil,
                                  file: StaticString = #file,
                                  line: UInt = #line) {
         assertAmbigousLayout(view, file: file, line: line)
@@ -382,6 +385,7 @@ extension ZMSnapshotTestCase {
     ///   - line: source line
     func verifyInIPhoneSize(view: UIView,
                             extraLayoutPass: Bool = false,
+                            configuration: Configuration? = nil,
                             file: StaticString = #file,
                             line: UInt = #line) {
 
@@ -395,6 +399,7 @@ extension ZMSnapshotTestCase {
 
         verify(view: view,
                extraLayoutPass: extraLayoutPass,
+               configuration: configuration,
                file: file,
                line: line)
     }
@@ -430,8 +435,12 @@ extension ZMSnapshotTestCase {
 
     // MARK: - verify the snapshots in multiple devices
 
-    func verifyMultipleSize(view: UIView, extraLayoutPass: Bool, inSizes sizes: [String:CGSize], configuration: ConfigurationWithDeviceType?,
-                            file: StaticString = #file, line: UInt = #line) {
+    func verifyMultipleSize(view: UIView,
+                            extraLayoutPass: Bool,
+                            inSizes sizes: [String:CGSize],
+                            configuration: ConfigurationWithDeviceType?,
+                            file: StaticString = #file,
+                            line: UInt = #line) {
         for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = configuration {
