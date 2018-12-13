@@ -35,8 +35,6 @@ final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO:
 
         selfClient = mockUserClient()
         client = mockUserClient()
-
-        //recordMode = true
     }
 
     override func tearDown() {
@@ -50,20 +48,14 @@ final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO:
         super.tearDown()
     }
 
-//    ///TODO: extension of XCTest
-//    func resetColorScheme() {
-//        ColorScheme.default.variant = .light
-//
-//        NSAttributedString.invalidateMarkdownStyle()
-//        NSAttributedString.invalidateParagraphStyle()
-//    }
-
     func testView() {
-//        record = true
+        record = true
 
-        prepareSut(variant: .dark)
+        prepareSut(variant: .light, numberOfClients: 7)
+        let navWrapperController = sut.wrapInNavigationController()
+        navWrapperController.navigationBar.tintColor = UIColor.accent()
 
-        assertSnapshot(matching: sut, as: .image)
+        assertSnapshot(matching: navWrapperController, as: .image)
     }
 
     /// Prepare SUT for snapshot tests
