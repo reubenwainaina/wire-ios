@@ -18,6 +18,43 @@
 
 import UIKit
 
+/// A view for displaying a poll.
+class PollView: UIView {
+
+    var poll: Poll?
+    var lines: [PollOptionView] = []
+
+    let stackView = UIStackView()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        stackView.spacing = 8
+        stackView.axis = .vertical
+        addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.fitInSuperview()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(with poll: Poll) {
+        self.poll = poll
+
+        // remove the old lines
+        lines.forEach(stackView.removeArrangedSubview)
+        lines.forEach { $0.removeFromSuperview() }
+
+        // add the new lines
+        let options = poll.options.map(PollOptionView.init)
+        options.forEach(stackView.addArrangedSubview)
+        lines = options
+    }
+
+}
+
 /// A view for displaying the poll options.
 class PollOptionView: UIView {
 
@@ -71,43 +108,6 @@ class PollOptionView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-}
-
-/// A view for displaying a poll.
-class PollView: UIView {
-
-    var poll: Poll?
-    var lines: [PollOptionView] = []
-
-    let stackView = UIStackView()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        stackView.spacing = 8
-        stackView.axis = .vertical
-        addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.fitInSuperview()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func configure(with poll: Poll) {
-        self.poll = poll
-
-        // remove the old lines
-        lines.forEach(stackView.removeArrangedSubview)
-        lines.forEach { $0.removeFromSuperview() }
-
-        // add the new lines
-        let options = poll.options.map(PollOptionView.init)
-        options.forEach(stackView.addArrangedSubview)
-        lines = options
     }
 
 }
