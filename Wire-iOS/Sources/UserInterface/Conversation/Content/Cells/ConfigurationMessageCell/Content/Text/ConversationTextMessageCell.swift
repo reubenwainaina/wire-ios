@@ -163,7 +163,11 @@ extension ConversationTextMessageCellDescription {
         var cells: [AnyConversationMessageCellDescription] = []
 
         // Finding polls
-        // TODO: Return the correct cells when we detect a poll
+        if let poll = NSAttributedString.findPoll(message: textMessageData) {
+            let questionCell = AnyConversationMessageCellDescription(ConversationTextMessageCellDescription(attributedString: poll.attributtedQuestion))
+            let pollCell = AnyConversationMessageCellDescription(ConversationPollMessageCellDescription(poll: poll))
+            return [questionCell, pollCell]
+        }
 
         // Text parsing
 

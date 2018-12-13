@@ -20,4 +20,56 @@ import UIKit
 
 // TODO: Implement the poll cell
 
+class ConversationPollMessageCell: UIView, ConversationMessageCell {
+    typealias Configuration = Poll
+
+    let pollView = PollView()
+    var isSelected: Bool = false
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        addSubview(pollView)
+        pollView.translatesAutoresizingMaskIntoConstraints = false
+        pollView.fitInSuperview(withTrailingInsets: -UIView.conversationLayoutMargins.right)
+    }
+
+    var selectionView: UIView? {
+        return pollView
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(with object: Poll, animated: Bool) {
+        pollView.configure(with: object)
+    }
+
+}
+
 // TODO: Implement the poll cell description
+
+class ConversationPollMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = ConversationPollMessageCell
+    let configuration: Poll
+
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationCellDelegate?
+    weak var actionController: ConversationMessageActionController?
+
+    var showEphemeralTimer: Bool = false
+    var topMargin: Float = 8
+
+    let isFullWidth: Bool  = false
+    let supportsActions: Bool = true
+    let containsHighlightableContent: Bool = true
+
+    let accessibilityIdentifier: String? = nil
+    let accessibilityLabel: String? = nil
+
+    init(poll: Poll) {
+        self.configuration = poll
+    }
+
+}

@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 // TODO: Convert to ConversationCellSnapshotTestCase
-class ConversationPollMessageCellTests: XCTestCase {
+class ConversationPollMessageCellTests: ConversationCellSnapshotTestCase {
 
     let pollMessageText = """
     [POLL]{
@@ -47,6 +47,8 @@ class ConversationPollMessageCellTests: XCTestCase {
 
     func testThatItRendersPoll() {
         // TODO: Render the snapshot
+        let mesage = MockMessageFactory.textMessage(withText: pollMessageText)!
+        verify(message: message)
     }
 
 }
