@@ -18,13 +18,77 @@
 
 import SnapshotTesting
 import XCTest
+@testable import Wire
 
-final class ClientListViewControllerSnapshotTests: XCTestCase {
+
+final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO: restore to XCTEst after moving uiMOC
+    var sut: ClientListViewController!
+    var mockUser: MockUser!
+    var client: UserClient!
+    var selfClient: UserClient!
+
+    override func setUp() {
+        super.setUp()
+
+        let user = MockUser.mockUsers()[0]
+        mockUser = MockUser(for: user)
+
+        selfClient = mockUserClient()
+        client = mockUserClient()
+
+        //recordMode = true
+    }
+
+    override func tearDown() {
+        sut = nil
+        mockUser = nil
+        client = nil
+        selfClient = nil
+
+        resetColorScheme()
+
+        super.tearDown()
+    }
+
+//    ///TODO: extension of XCTest
+//    func resetColorScheme() {
+//        ColorScheme.default.variant = .light
+//
+//        NSAttributedString.invalidateMarkdownStyle()
+//        NSAttributedString.invalidateParagraphStyle()
+//    }
+
     func testView() {
-        //record = true
+//        record = true
 
-        let sut = UIViewController()
+        prepareSut(variant: .dark)
 
         assertSnapshot(matching: sut, as: .image)
     }
+
+    /// Prepare SUT for snapshot tests
+    ///
+    /// - Parameters:
+    ///   - variant: the color cariant
+    ///   - numberOfClients: number of clients other than self device. Default: display 3 cells, to show footer in same screen
+    func prepareSut(variant: ColorSchemeVariant?, numberOfClients: Int = 3) {
+        var clientsList: [UserClient]? = nil
+
+        for _ in 0 ..< numberOfClients {
+            if clientsList == nil {
+                clientsList = []
+            }
+            clientsList?.append(client)
+        }
+
+        sut = ClientListViewController(clientsList: clientsList,
+                                       selfClient: selfClient,
+                                       credentials: nil,
+                                       detailedView: true,
+                                       showTemporary: true,
+                                       variant: variant)
+
+        sut.showLoadingView = false
+    }
 }
+
