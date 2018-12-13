@@ -22,9 +22,9 @@ extension UITableView {
     @objc(scrollToBottomAnimated:)
     func scrollToBottom(animated: Bool) {
         // kill existing scrolling animation
-        self.setContentOffset(self.contentOffset, animated: false)
+        setContentOffset(self.contentOffset, animated: false)
         
         // scroll to bottom
-        self.setContentOffset(CGPoint(x: 0, y: self.contentInset.bottom), animated:animated)
+        setContentOffset(CGPoint(x: 0, y: contentInset.bottom), animated:animated)
     }
 }

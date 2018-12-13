@@ -19,13 +19,13 @@
 import Foundation
 
 extension ZMSnapshotTestCase {
-    func mockUserClient() -> UserClient! {
+    func mockUserClient(model: String = "Simulator") -> UserClient! {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"
 
         client.user = ZMUser.insertNewObject(in: uiMOC)
         client.deviceClass = "tablet"
-        client.model = "Simulator"
+        client.model = model
         client.label = "Bill's MacBook Pro"
 
         let fingerprint: Data? = "102030405060708090102030405060708090102030405060708090".data(using: .utf8)

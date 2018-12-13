@@ -24,7 +24,6 @@ import XCTest
 final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO: restore to XCTEst after moving uiMOC
     var sut: ClientListViewController!
     var mockUser: MockUser!
-    var client: UserClient!
     var selfClient: UserClient!
 
     override func setUp() {
@@ -34,13 +33,11 @@ final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO:
         mockUser = MockUser(for: user)
 
         selfClient = mockUserClient()
-        client = mockUserClient()
     }
 
     override func tearDown() {
         sut = nil
         mockUser = nil
-        client = nil
         selfClient = nil
 
         resetColorScheme()
@@ -48,13 +45,22 @@ final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO:
         super.tearDown()
     }
 
-    func testView() {
+    func testThatTableViewDoesNotOverlapNavigationBar() {
         record = true
 
-        prepareSut(variant: .light, numberOfClients: 7)
+        let numDevice = 4
+
+        prepareSut(variant: .light, numberOfClients: numDevice)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
 
+        // make table view's cells visible
+        navWrapperController.view.frame = CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6)
+        navWrapperController.view.layoutIfNeeded()
+
+
+        let tableView = self.sut.clientsTableView!
+            tableView.scrollToRow(at: IndexPath(row:numDevice - 1, section: 1), at: .bottom, animated: false)
         assertSnapshot(matching: navWrapperController, as: .image)
     }
 
@@ -66,11 +72,12 @@ final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO:
     func prepareSut(variant: ColorSchemeVariant?, numberOfClients: Int = 3) {
         var clientsList: [UserClient]? = nil
 
-        for _ in 0 ..< numberOfClients {
+        for i in 0 ..< numberOfClients {
             if clientsList == nil {
                 clientsList = []
             }
-            clientsList?.append(client)
+            let client = mockUserClient(model: "Simulator \(i)")
+            clientsList?.append(client!)
         }
 
         sut = ClientListViewController(clientsList: clientsList,
