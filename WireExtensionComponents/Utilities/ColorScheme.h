@@ -38,7 +38,6 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 
 + (UIKeyboardAppearance)keyboardAppearanceForVariant:(ColorSchemeVariant)variant;
 
-- (BOOL)isCurrentAccentColor:(UIColor *)accentColor;
 @end
 
 @interface UIColor (ColorScheme)

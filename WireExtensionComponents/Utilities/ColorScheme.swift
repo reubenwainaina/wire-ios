@@ -144,6 +144,10 @@ fileprivate extension ColorPair {
 
 extension ColorSchemeColor {
 
+    func isCurrentAccentColor(_ accentColor: UIColor?) -> Bool {
+        return self.accentColor.isEqual(to: accentColor)
+    }
+
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
         switch self {
         case .textForeground:

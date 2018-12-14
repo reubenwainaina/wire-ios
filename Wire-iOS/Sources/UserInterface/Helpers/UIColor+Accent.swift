@@ -25,13 +25,30 @@ extension UIColor {
         let lhs = self
         let rhs = object
 
-        var rgba1 = [CGFloat](repeating: 0.0, count: 4)
-        
-        lhs.getRed(&(rgba1[0]), green: &rgba1[1], blue: &rgba1[2], alpha: &rgba1[3])
-        var rgba2 = [CGFloat](repeating: 0.0, count: 4)
-        rhs.getRed(&rgba2[0], green: &rgba2[1], blue: &rgba2[2], alpha: &rgba2[3])
+        var r1: CGFloat = 0
+        var g1: CGFloat = 0
+        var b1: CGFloat = 0
+        var a1: CGFloat = 0
 
-        return (rgba1[0] == rgba2[0]) && (rgba1[1] == rgba2[1]) && (rgba1[2] == rgba2[2]) && (rgba1[3] == rgba2[3])
+        var r2: CGFloat = 0
+        var g2: CGFloat = 0
+        var b2: CGFloat = 0
+        var a2: CGFloat = 0
+
+        lhs.getRed(&r1,
+                   green: &g1,
+                   blue: &b1,
+                   alpha: &a1)
+
+        rhs.getRed(&r2,
+                   green: &g2,
+                   blue: &b2,
+                   alpha: &a2)
+
+        return (r1 == r2) &&
+            (g1 == g2) &&
+            (b1 == b2) &&
+            (a1 == a2)
     }
 
 }
