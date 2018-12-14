@@ -61,6 +61,7 @@
     return variant == ColorSchemeVariantLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
 }
 
+
 - (BOOL)isCurrentAccentColor:(UIColor *)accentColor
 {
     return [self.accentColor isEqualTo:accentColor];

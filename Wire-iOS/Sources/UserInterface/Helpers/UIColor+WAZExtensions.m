@@ -29,6 +29,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation UIColor (WAZExtensions)
 
+/*
 + (void)setAccentColor:(ZMAccentColor)accentColor
 {
     id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
@@ -55,5 +56,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             (rgba1[2] == rgba2[2]) &&
             (rgba1[3] == rgba2[3]));
 }
+ */
 
 @end

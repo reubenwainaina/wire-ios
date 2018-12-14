@@ -70,6 +70,8 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     /// CI server produce empty snapshot but it works on local machine. It seems the alert with type UIAlertControllerStyleAlert is not shown on CI server.
+
+    ///TODO: try dismissing all alerts first?
     func DISABLE_testForNoEmailClientAlert() {
         let contact = ZMAddressBookContact()
 

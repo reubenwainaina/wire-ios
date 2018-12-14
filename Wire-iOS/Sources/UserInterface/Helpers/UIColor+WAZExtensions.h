@@ -25,8 +25,8 @@
 @interface UIColor (WAZExtensions)
 
 /// Set accent color on self user to this index.
-+ (void)setAccentColor:(ZMAccentColor)accentColor;
+//+ (void)setAccentColor:(ZMAccentColor)accentColor;
 
-- (BOOL)isEqualTo:(id)object;
+//- (BOOL)isEqualTo:(id)object;
 
 @end
