@@ -18,41 +18,6 @@
 
 import Foundation
 
-///TODO: new file
-extension UIColor {
-    func isEqual(to object: UIColor) -> Bool {
-
-        let lhs = self
-        let rhs = object
-
-        var r1: CGFloat = 0
-        var g1: CGFloat = 0
-        var b1: CGFloat = 0
-        var a1: CGFloat = 0
-
-        var r2: CGFloat = 0
-        var g2: CGFloat = 0
-        var b2: CGFloat = 0
-        var a2: CGFloat = 0
-
-        lhs.getRed(&r1,
-                   green: &g1,
-                   blue: &b1,
-                   alpha: &a1)
-
-        rhs.getRed(&r2,
-                   green: &g2,
-                   blue: &b2,
-                   alpha: &a2)
-
-        return (r1 == r2) &&
-            (g1 == g2) &&
-            (b1 == b2) &&
-            (a1 == a2)
-    }
-
-}
-
 extension UIColor {
     @objc static var accentDarken: UIColor {
         return accent().mix(.black, amount: 0.1).withAlphaComponent(0.32)

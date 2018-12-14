@@ -144,10 +144,6 @@ fileprivate extension ColorPair {
 
 extension ColorSchemeColor {
 
-    func isCurrentAccentColor(_ accentColor: UIColor?) -> Bool {
-        return self.accentColor.isEqual(to: accentColor)
-    }
-
     fileprivate func colorPair(accentColor: UIColor) -> ColorPair  {
         switch self {
         case .textForeground:
@@ -262,6 +258,43 @@ public extension ColorScheme {
     @objc(nameAccentForColor:variant:)
     public func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
         return UIColor.nameColor(for: color, variant: variant)
+    }
+
+    func isCurrentAccentColor(_ accentColor: UIColor) -> Bool {
+        return self.accentColor.isEqualTo(accentColor)
+    }
+}
+
+extension UIColor {
+    func isEqualTo(_ object: UIColor) -> Bool {
+
+        let lhs = self
+        let rhs = object
+
+        var r1: CGFloat = 0
+        var g1: CGFloat = 0
+        var b1: CGFloat = 0
+        var a1: CGFloat = 0
+
+        var r2: CGFloat = 0
+        var g2: CGFloat = 0
+        var b2: CGFloat = 0
+        var a2: CGFloat = 0
+
+        lhs.getRed(&r1,
+                   green: &g1,
+                   blue: &b1,
+                   alpha: &a1)
+
+        rhs.getRed(&r2,
+                   green: &g2,
+                   blue: &b2,
+                   alpha: &a2)
+
+        return (r1 == r2) &&
+            (g1 == g2) &&
+            (b1 == b2) &&
+            (a1 == a2)
     }
 
 }
