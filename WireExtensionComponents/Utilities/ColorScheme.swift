@@ -266,10 +266,10 @@ public extension ColorScheme {
 }
 
 extension UIColor {
-    func isEqualTo(_ object: UIColor) -> Bool {
+    public func isEqualTo(_ other: UIColor) -> Bool {
 
         let lhs = self
-        let rhs = object
+        let rhs = other
 
         var r1: CGFloat = 0
         var g1: CGFloat = 0
