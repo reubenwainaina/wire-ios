@@ -134,7 +134,11 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
             XCTAssertNil(error, "Unexpected error \(error)")
         }
 
-        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(), applicationContainer: documentsDirectory!, dispatchGroup: nil, startedMigrationCallback: nil, completionHandler: { contextDirectory in
+        StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(),
+                                                                applicationContainer: documentsDirectory!,
+                                                                dispatchGroup: nil,
+                                                                startedMigrationCallback: nil,
+                                                                completionHandler: { contextDirectory in
             self.uiMOC = contextDirectory.uiContext
             contextExpectation.fulfill()
         })
@@ -242,14 +246,6 @@ extension ZMSnapshotTestCase {
             return true
         }
         return false
-    }
-
-    ///TODO: extension of XCTest
-    func resetColorScheme() {
-        ColorScheme.default.variant = .light
-
-        NSAttributedString.invalidateMarkdownStyle()
-        NSAttributedString.invalidateParagraphStyle()
     }
 }
 

@@ -16,14 +16,58 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension ZMSnapshotTestCase {
+extension XCTestCase {
+    
+    fileprivate static var _uiMOC: NSManagedObjectContext! ///TODO: init
+
+    var uiContext: NSManagedObjectContext! {
+        get {
+            guard XCTestCase._uiMOC == nil else {
+                return XCTestCase._uiMOC
+            }
+
+
+            var documentsDirectory: URL!
+
+            do {
+                documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            } catch {
+                XCTAssertNil(error, "Unexpected error \(error)")
+            }
+
+
+            let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
+
+            StorageStack.shared.createManagedObjectContextDirectory(accountIdentifier: UUID(),
+                                                                    applicationContainer: documentsDirectory!,
+                                                                    dispatchGroup: nil,
+                                                                    startedMigrationCallback: nil,
+                                                                    completionHandler: { contextDirectory in
+                                                                        XCTestCase._uiMOC = contextDirectory.uiContext
+
+                                                                        contextExpectation.fulfill()
+
+            })
+
+            // Wait for the async request to complete
+            waitForExpectations(timeout: 2, handler: nil)
+
+            return XCTestCase._uiMOC
+        }
+
+        set {
+            XCTestCase._uiMOC = newValue
+        }
+    }
+
     func mockUserClient(model: String = "Simulator") -> UserClient! {
-        let client = UserClient.insertNewObject(in: uiMOC)
+        let client = UserClient.insertNewObject(in: uiContext)
         client.remoteIdentifier = "102030405060708090"
 
-        client.user = ZMUser.insertNewObject(in: uiMOC)
+        client.user = ZMUser.insertNewObject(in: uiContext)
         client.deviceClass = "tablet"
         client.model = model
         client.label = "Bill's MacBook Pro"
@@ -40,4 +84,12 @@ extension ZMSnapshotTestCase {
 
         return client
     }
+
+    func resetColorScheme() {
+        ColorScheme.default.variant = .light
+
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+    }
+
 }

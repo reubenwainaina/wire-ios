@@ -21,7 +21,7 @@ import XCTest
 @testable import Wire
 
 
-final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO: restore to XCTEst after moving uiMOC
+final class ClientListViewControllerSnapshotTests: XCTestCase {
     var sut: ClientListViewController!
     var mockUser: MockUser!
     var selfClient: UserClient!
