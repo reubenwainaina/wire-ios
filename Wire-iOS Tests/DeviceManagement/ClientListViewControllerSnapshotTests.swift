@@ -46,7 +46,7 @@ final class ClientListViewControllerSnapshotTests: ZMSnapshotTestCase { ///TODO:
     }
 
     func testThatTableViewDoesNotOverlapNavigationBar() {
-        record = true
+       // record = true
 
         let numDevice = 4
 
