@@ -94,7 +94,7 @@ final class EmptySearchResultsViewTests: ZMSnapshotTestCase {
                 verticalFittingPriority: .fittingSizeLevel
             )
             
-            verify(view: sut, identifier: version.description)
+            verify(view: sut, snapshotConfig: SnapshotConfig(identifier: version.description))
         }
     }
 }

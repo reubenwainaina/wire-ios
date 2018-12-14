@@ -76,7 +76,9 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             mockBackgroundView.backgroundColor = .from(scheme: .background)
             mockBackgroundView.addSubview($0.result)
 
-            self.verify(view: mockBackgroundView, identifier: identifier, file: #file, line: #line)
+            verify(view: mockBackgroundView,
+                   snapshotConfig: SnapshotConfig(identifier: identifier))
+            
             return .none
             }.count, 0, line: #line)
     }

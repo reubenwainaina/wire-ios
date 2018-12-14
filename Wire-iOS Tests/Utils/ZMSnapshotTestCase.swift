@@ -18,7 +18,8 @@
 
 
 @testable import Wire
-import FBSnapshotTestCase
+import XCTest
+import SnapshotTesting
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {
@@ -66,21 +67,9 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
-extension StaticString {
-    func utf8SignedStart() -> UnsafePointer<Int8> {
-        let fileUnsafePointer = self.utf8Start
-        let reboundToSigned = fileUnsafePointer.withMemoryRebound(to: Int8.self, capacity: self.utf8CodeUnitCount) {
-            return UnsafePointer($0)
-        }
-        return reboundToSigned
-    }
-}
-
-open class ZMSnapshotTestCase: FBSnapshotTestCase {
+open class ZMSnapshotTestCase: XCTestCase {
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
-    typealias Configuration = (_ view: UIView) -> Void
 
     var uiMOC: NSManagedObjectContext!
 
@@ -114,7 +103,7 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
         recordMode = true
         #endif
 
-        usesDrawViewHierarchyInRect = true
+        //        usesDrawViewHierarchyInRect = true
         let contextExpectation: XCTestExpectation = expectation(description: "It should create a context")
         StorageStack.reset()
         StorageStack.shared.createStorageAsInMemory = true
@@ -129,8 +118,8 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
                                                                 dispatchGroup: nil,
                                                                 startedMigrationCallback: nil,
                                                                 completionHandler: { contextDirectory in
-            self.uiMOC = contextDirectory.uiContext
-            contextExpectation.fulfill()
+                                                                    self.uiMOC = contextDirectory.uiContext
+                                                                    contextExpectation.fulfill()
         })
 
         wait(for: [contextExpectation], timeout: 0.1)
@@ -185,6 +174,43 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
 
 }
 
+typealias Configuration = (_ view: UIView) -> Void
+
+struct SnapshotConfig {
+    var extraLayoutPass: Bool = false
+    var deviceName: String? = nil
+    var identifier: String? = nil
+    var suffix: NSOrderedSet? = nil//FBSnapshotTestCaseDefaultSuffixes(),
+    var tolerance: CGFloat = 0
+    var configuration: Configuration? = nil
+    var file: StaticString = #file
+    var testName: String = #function
+    var line: UInt = #line
+
+    init(extraLayoutPass: Bool = false,
+         deviceName: String? = nil,
+         identifier: String? = nil,
+         suffix: NSOrderedSet? = nil,//FBSnapshotTestCaseDefaultSuffixes(),
+        tolerance: CGFloat = 0,
+        configuration: Configuration? = nil,
+        file: StaticString = #file,
+        testName: String = #function,
+        line: UInt = #line
+        ) {
+
+        self.extraLayoutPass = extraLayoutPass
+        self.deviceName = deviceName
+        self.identifier = identifier
+        self.suffix = suffix
+        self.tolerance = tolerance
+        self.configuration = configuration
+        self.file = file
+        self.testName = testName
+        self.line = line
+    }
+}
+
+
 // MARK: - Helpers
 extension ZMSnapshotTestCase {
     func containerView(with view: UIView) -> UIView {
@@ -198,25 +224,20 @@ extension ZMSnapshotTestCase {
     }
 
     private func snapshotVerify(view: UIView,
-                        identifier: String? = nil,
-                        suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
-                        tolerance: CGFloat = 0,
-                        file: StaticString = #file,
-                        line: UInt = #line) {
-        if let errorDescription = snapshotVerifyViewOrLayer(view,
-                                                            identifier: identifier,
-                                                            suffixes: suffix,
-                                                            tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
+                                snapshotConfig: SnapshotConfig) {
 
-            XCTFail("\(errorDescription)", file:file, line:line)
-        } else {
-            XCTAssert(true)
-        }
+        ///TODO: more argument
+        assertSnapshot(matching: view,
+                       as: .image,
+                       file: snapshotConfig.file,
+                       testName:snapshotConfig.testName,
+                       line: snapshotConfig.line)
+
     }
 
     private func assertAmbigousLayout(_ view: UIView,
-                              file: StaticString = #file,
-                              line: UInt = #line) {
+                                      file: StaticString = #file,
+                                      line: UInt = #line) {
         if view.hasAmbiguousLayout,
             let trace = view._autolayoutTrace() {
             let description = "Ambigous layout in view: \(view) trace: \n\(trace)"
@@ -227,8 +248,8 @@ extension ZMSnapshotTestCase {
     }
 
     private func assertEmptyFrame(_ view: UIView,
-                          file: StaticString = #file,
-                          line: UInt = #line) -> Bool {
+                                  file: StaticString = #file,
+                                  line: UInt = #line) -> Bool {
         if view.frame.isEmpty {
             let description = "View frame can not be empty"
             let filePath = "\(file)"
@@ -245,60 +266,50 @@ extension ZMSnapshotTestCase {
 
     /// Performs an assertion with the given view and the recorded snapshot.
     func verify(view: UIView,
-                extraLayoutPass: Bool = false,
-                tolerance: CGFloat = 0,
-                identifier: String? = nil,
-                deviceName: String? = nil,
-                configuration: Configuration? = nil,
-                file: StaticString = #file,
-                line: UInt = #line
-        ) {
+                snapshotConfig: SnapshotConfig = SnapshotConfig()) {
         let container = containerView(with: view)
-        if assertEmptyFrame(container, file: file, line: line) {
+        if assertEmptyFrame(container, file: snapshotConfig.file, line: snapshotConfig.line) {
             return
         }
 
+        /*
         var finalIdentifier: String?
 
-        if 0 == (identifier?.count ?? 0) {
-            if let deviceName = deviceName,
+        if 0 == (snapshotConfig.identifier?.count ?? 0) {
+            if let deviceName = snapshotConfig.deviceName,
                 deviceName.count > 0 {
                 finalIdentifier = deviceName
             }
         } else {
-            if let deviceName = deviceName,
+            if let deviceName = snapshotConfig.deviceName,
                 deviceName.count > 0 {
-                finalIdentifier = "\(identifier ?? "")-\(deviceName)"
+                finalIdentifier = "\(snapshotConfig.identifier ?? "")-\(deviceName)"
             } else {
-                finalIdentifier = "\(identifier ?? "")"
+                finalIdentifier = "\(snapshotConfig.identifier ?? "")"
             }
         }
 
-        configuration?(view)
+        ///TODO: one more var?
+        snapshotConfig.identifier = finalIdentifier
+ */
 
-        if extraLayoutPass {
+        snapshotConfig.configuration?(view)
+
+        if snapshotConfig.extraLayoutPass {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
         view.layer.speed = 0 // freeze animations for deterministic tests
         snapshotVerify(view: container,
-                       identifier: finalIdentifier,
-                       suffix: FBSnapshotTestCaseDefaultSuffixes(),
-                       tolerance: tolerance,
-                       file: file,
-                       line: line)
+                       snapshotConfig: snapshotConfig)
 
-        assertAmbigousLayout(container, file: file, line: line)
+        assertAmbigousLayout(container, file: snapshotConfig.file, line: snapshotConfig.line)
     }
 
     /// Performs an assertion with the given view and the recorded snapshot with the custom width
     func verifyView(view: UIView,
-                    extraLayoutPass: Bool = false,
                     width: CGFloat,
-                    tolerance: CGFloat = 0,
-                    configuration: Configuration? = nil,
-                    file: StaticString = #file,
-                    line: UInt = #line
+                    snapshotConfig: SnapshotConfig
         ) {
         let container = containerView(with: view)
 
@@ -309,58 +320,46 @@ extension ZMSnapshotTestCase {
 
         container.layoutIfNeeded()
 
-        if assertEmptyFrame(container, file: file, line: line) {
+        if assertEmptyFrame(container, file: snapshotConfig.file, line: snapshotConfig.line) {
             return
         }
 
-        configuration?(view)
+        snapshotConfig.configuration?(view)
 
-        if extraLayoutPass {
+        if snapshotConfig.extraLayoutPass {
             RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.1))
         }
 
         view.layer.speed = 0 // freeze animations for deterministic tests
+
+        var snapshotConfigClone = snapshotConfig
+        snapshotConfigClone.identifier = "\(Int(width))"
+
         snapshotVerify(view: container,
-                       identifier:"\(Int(width))",
-            tolerance: tolerance,
-            file: file,
-            line: line)
+                       snapshotConfig: snapshotConfigClone)
     }
 
     /// Performs multiple assertions with the given view using the screen sizes of
     /// the common iPhones in Portrait and iPad in Landscape and Portrait.
     /// This method only makes sense for views that will be on presented fullscreen.
     func verifyInAllPhoneWidths(view: UIView,
-                                extraLayoutPass: Bool = false,
-                                tolerance: CGFloat = 0,
-                                configuration: Configuration? = nil,
-                                file: StaticString = #file,
-                                line: UInt = #line) {
-        assertAmbigousLayout(view, file: file, line: line)
+                                snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+        assertAmbigousLayout(view, file: snapshotConfig.file, line: snapshotConfig.line)
         for width in phoneWidths() {
             verifyView(view: view,
-                       extraLayoutPass: extraLayoutPass,
                        width: width,
-                       tolerance: tolerance,
-                       configuration: configuration,
-                       file: file,
-                       line: line)
+                       snapshotConfig: snapshotConfig
+            )
         }
     }
 
     func verifyInAllTabletWidths(view: UIView,
-                                 extraLayoutPass: Bool = false,
-                                 configuration: Configuration? = nil,
-                                 file: StaticString = #file,
-                                 line: UInt = #line) {
-        assertAmbigousLayout(view, file: file, line: line)
+                                 snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+        assertAmbigousLayout(view, file: snapshotConfig.file, line: snapshotConfig.line)
         for width in tabletWidths() {
             verifyView(view: view,
-                       extraLayoutPass: extraLayoutPass,
                        width: width,
-                       configuration: configuration,
-                       file: file,
-                       line: line)
+                       snapshotConfig: snapshotConfig)
         }
     }
 
@@ -368,13 +367,8 @@ extension ZMSnapshotTestCase {
     ///
     /// - Parameters:
     ///   - view: the view to verify
-    ///   - file: source file
-    ///   - line: source line
     func verifyInIPhoneSize(view: UIView,
-                            extraLayoutPass: Bool = false,
-                            configuration: Configuration? = nil,
-                            file: StaticString = #file,
-                            line: UInt = #line) {
+                            snapshotConfig: SnapshotConfig = SnapshotConfig()) {
 
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -385,23 +379,26 @@ extension ZMSnapshotTestCase {
         view.layoutIfNeeded()
 
         verify(view: view,
-               extraLayoutPass: extraLayoutPass,
-               configuration: configuration,
-               file: file,
-               line: line)
+               snapshotConfig: snapshotConfig)
     }
 
     func verifyInAllColorSchemes(view: UIView,
-                                 tolerance: CGFloat = 0,
-                                 file: StaticString = #file,
-                                 line: UInt = #line) {
+                                 snapshotConfig: SnapshotConfig = SnapshotConfig()) {
         if var themeable = view as? Themeable {
             themeable.colorSchemeVariant = .light
             snapshotBackgroundColor = .white
-            verify(view: view, tolerance: tolerance, identifier: "LightTheme", file: file, line: line)
+
+            var snapshotConfigLightTheme = snapshotConfig
+            snapshotConfigLightTheme.identifier = "LightTheme"
+
+
+            verify(view: view, snapshotConfig: snapshotConfigLightTheme)
             themeable.colorSchemeVariant = .dark
             snapshotBackgroundColor = .black
-            verify(view: view, tolerance: tolerance, identifier: "DarkTheme", file: file, line: line)
+
+            var snapshotConfigDarkTheme = snapshotConfig
+            snapshotConfigDarkTheme.identifier = "DarkTheme"
+            verify(view: view, snapshotConfig: snapshotConfigDarkTheme)
         } else {
             XCTFail("View doesn't support Themable protocol")
         }
@@ -423,50 +420,36 @@ extension ZMSnapshotTestCase {
     // MARK: - verify the snapshots in multiple devices
 
     func verifyMultipleSize(view: UIView,
-                            extraLayoutPass: Bool,
                             inSizes sizes: [String:CGSize],
-                            configuration: ConfigurationWithDeviceType?,
-                            file: StaticString = #file,
-                            line: UInt = #line) {
-        for (deviceName, size) in sizes {
+                            snapshotConfig: SnapshotConfig = SnapshotConfig()
+                            ) {
+        for (_ /*deviceName*/, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
-            if let configuration = configuration {
-                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
+            if let configuration = snapshotConfig.configuration {
+//                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
                 UIView.performWithoutAnimation({
-                    configuration(view, iPad)
+                    configuration(view) ///TODO: check still ned iPad argu?
                 })
             }
             verify(view: view,
-                   extraLayoutPass: extraLayoutPass,
-                   deviceName: deviceName,
-                   file: file,
-                   line: line)
+                   snapshotConfig: snapshotConfig)
         }
     }
 
 
     func verifyInAllIPhoneSizes(view: UIView,
-                                extraLayoutPass: Bool = false,
-                                configuration: Configuration? = nil,
-                                file: StaticString = #file,
-                                line: UInt = #line) {
-        verifyMultipleSize(view: view, extraLayoutPass: extraLayoutPass, inSizes: XCTestCase.phoneScreenSizes, configuration: { view, isPad in
-                configuration?(view)
-        }, file: file, line: line)
+                                snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+        verifyMultipleSize(view: view,
+                           inSizes: XCTestCase.phoneScreenSizes,
+                           snapshotConfig: snapshotConfig)
     }
 
     func verifyInAllDeviceSizes(view: UIView,
-                                extraLayoutPass: Bool = false,
-                                file: StaticString = #file,
-                                line: UInt = #line,
-                                configuration: ConfigurationWithDeviceType? = nil) {
+                                snapshotConfig: SnapshotConfig = SnapshotConfig()) {
 
         verifyMultipleSize(view: view,
-                           extraLayoutPass: extraLayoutPass,
                            inSizes: XCTestCase.deviceScreenSizes,
-                           configuration: configuration,
-                           file: file,
-                           line: line)
+                           snapshotConfig: snapshotConfig)
     }
 
 }
@@ -507,6 +490,6 @@ extension ZMSnapshotTestCase {
 
     func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
         presentViewController(controller, file: file, line: line)
-        verify(view: controller.view, file: file, line: line)
+        verify(view: controller.view)
     }
 }

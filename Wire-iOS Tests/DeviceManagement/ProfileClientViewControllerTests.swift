@@ -52,7 +52,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         sut.spinner.isHidden = true
         sut.showBackButton = false
 
-        verify(view: sut.view, tolerance: 0.1)
+        verify(view: sut.view, snapshotConfig: SnapshotConfig(tolerance: 0.1))
     }
 
     func testTestForLightTheme(){

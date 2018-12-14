@@ -42,16 +42,18 @@ class AdaptiveFormViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItHasCorrectLayout() {
-        verifyInAllDeviceSizes(view: sut.view) { _, isPad in
-            let traitCollection: UITraitCollection
-            if isPad {
-                traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-            } else {
-                traitCollection = UITraitCollection(horizontalSizeClass: .compact)
-            }
+        verifyInAllDeviceSizes(view: sut.view, snapshotConfig: SnapshotConfig(configuration:
+            { _ /*TODO: , isPad*/ in
+//                let traitCollection: UITraitCollection
+                /*if isPad {
+                 traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+                 } else {
+                 traitCollection = UITraitCollection(horizontalSizeClass: .compact)
+                 }*/
 
-            self.mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: self.sut)
-            self.sut.traitCollectionDidChange(nil)
+//                self.mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: self.sut)
+                self.sut.traitCollectionDidChange(nil)
         }
+        ))
     }
 }

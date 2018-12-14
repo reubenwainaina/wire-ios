@@ -1308,7 +1308,7 @@
 		EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */ = {isa = PBXBuildFile; fileRef = EF8DD916211E2BD200E970F1 /* sample.pkpass */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
 		EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */; };
-		EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */; };
+		EF98987420C5A589005680C5 /* XCTestCase+MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987320C5A589005680C5 /* XCTestCase+MockUserClient.swift */; };
 		EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */; };
 		EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */; };
 		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
@@ -3121,7 +3121,7 @@
 		EF8DD916211E2BD200E970F1 /* sample.pkpass */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.pkpass; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClientViewControllerTests.swift; sourceTree = "<group>"; };
-		EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+MockUserClient.swift"; sourceTree = "<group>"; };
+		EF98987320C5A589005680C5 /* XCTestCase+MockUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MockUserClient.swift"; sourceTree = "<group>"; };
 		EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientColorVariantProtocol.swift; sourceTree = "<group>"; };
 		EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+AccentColorProvider.swift"; sourceTree = "<group>"; };
 		EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatterTests.swift; sourceTree = "<group>"; };
@@ -4927,6 +4927,7 @@
 		879090782121A109006219B4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EF98987320C5A589005680C5 /* XCTestCase+MockUserClient.swift */,
 				879090792121A120006219B4 /* VariantsBuilder.swift */,
 				EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */,
 				F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */,
@@ -6544,7 +6545,6 @@
 		EF27CD9A20C161500077FE55 /* DeviceManagement */ = {
 			isa = PBXGroup;
 			children = (
-				EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */,
 				EF27CD9B20C161500077FE55 /* ProfileViewControllerTests.swift */,
 				EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */,
 				EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */,
@@ -8325,7 +8325,7 @@
 				BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */,
 				16D4932C203DD480008DDFFA /* UserCellTests.swift in Sources */,
 				5E7315382191FCCB00255A78 /* ConversationMessageActionControllerTests.swift in Sources */,
-				EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */,
+				EF98987420C5A589005680C5 /* XCTestCase+MockUserClient.swift in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
 				EFC90F8F21C3FA60007FCAFF /* UIColorTests.swift in Sources */,
 				162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */,

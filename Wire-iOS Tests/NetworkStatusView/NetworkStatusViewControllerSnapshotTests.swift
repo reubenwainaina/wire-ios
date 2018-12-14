@@ -81,7 +81,8 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.view.layer.speed = 0 // freeze animations for deterministic tests
 
         // THEN
-        verify(view: mockContainerViewController.view, file: file, line: line)
+        verify(view: mockContainerViewController.view,
+               snapshotConfig: SnapshotConfig(file: file, line: line))
     }
 
     func testOnlineState() {

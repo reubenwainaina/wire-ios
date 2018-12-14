@@ -86,10 +86,12 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // THEN
         verifyInAllPhoneWidths(view: sut.view,
+                               snapshotConfig: SnapshotConfig(
                                configuration: { _ in
                                 // WHEN
                                 self.sut.audioButtonLongPressed(self.mockLongPressGestureRecognizer)
         })
+        )
     }
 
     func testAudioRecorderTouchChanged() {
@@ -97,11 +99,12 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // THEN
         verifyInAllPhoneWidths(view: sut.view,
+                               snapshotConfig: SnapshotConfig(
                                configuration: { _ in
                                 // WHEN
                                 self.sut.audioButtonLongPressed(self.mockLongPressGestureRecognizer)
                                 self.longPressChanged()
-        })
+        }))
     }
 
     func testAudioRecorderTouchEnded() {
@@ -109,11 +112,12 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // THEN
         verifyInAllPhoneWidths(view: sut.view,
+                               snapshotConfig: SnapshotConfig(
                                configuration: { _ in
                                 // WHEN
                                 self.sut.audioButtonLongPressed(self.mockLongPressGestureRecognizer)
                                 self.longPressEnded()
-        })
+        }))
     }
 }
 

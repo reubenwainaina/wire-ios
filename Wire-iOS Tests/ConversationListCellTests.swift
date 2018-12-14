@@ -48,7 +48,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         ) {
         sut.conversation = conversation
         
-        verify(view: sut, file: file, line: line)
+        verify(view: sut,
+               snapshotConfig: SnapshotConfig(file: file, line: line))
     }
     
     // MARK: - Tests
