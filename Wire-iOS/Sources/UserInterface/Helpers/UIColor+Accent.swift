@@ -57,7 +57,7 @@ extension UIColor {
 
         set {
             if (overridenAccentColor == newValue) {
-                return;
+                return
             }
 
             overridenAccentColor = newValue
