@@ -71,6 +71,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                 waitForImagesToLoad: Bool = false,
                 tolerance: CGFloat = 0,
                 file: StaticString = #file,
+                testName: String = #function,
                 line: UInt = #line) {
         let context = (context ?? defaultContext)!
         let section = ConversationMessageSectionController(message: message, context: context, layoutProperties: ConversationCellLayoutProperties())
@@ -86,6 +87,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         verifyInAllPhoneWidths(view: stackView,
                                snapshotConfig: SnapshotConfig(tolerance: tolerance,
                                                               file: file,
+                                                              testName: testName,
                                                               line: line)
                                )
     }

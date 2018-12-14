@@ -226,12 +226,18 @@ extension ZMSnapshotTestCase {
     private func snapshotVerify(view: UIView,
                                 snapshotConfig: SnapshotConfig) {
 
+        var snapshotConfigClone = snapshotConfig
+
+        if let deviceName = snapshotConfigClone.deviceName {
+            snapshotConfigClone.testName = snapshotConfigClone.testName + deviceName
+        }
+
         ///TODO: more argument
         assertSnapshot(matching: view,
                        as: .image,
-                       file: snapshotConfig.file,
-                       testName:snapshotConfig.testName,
-                       line: snapshotConfig.line)
+                       file: snapshotConfigClone.file,
+                       testName:snapshotConfigClone.testName,
+                       line: snapshotConfigClone.line)
 
     }
 
@@ -423,7 +429,7 @@ extension ZMSnapshotTestCase {
                             inSizes sizes: [String:CGSize],
                             snapshotConfig: SnapshotConfig = SnapshotConfig()
                             ) {
-        for (_ /*deviceName*/, size) in sizes {
+        for (deviceName, size) in sizes {
             view.frame = CGRect(origin: .zero, size: size)
             if let configuration = snapshotConfig.configuration {
 //                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
@@ -431,8 +437,12 @@ extension ZMSnapshotTestCase {
                     configuration(view) ///TODO: check still ned iPad argu?
                 })
             }
+
+            var snapshotConfigClone = snapshotConfig
+            snapshotConfigClone.deviceName = deviceName
+
             verify(view: view,
-                   snapshotConfig: snapshotConfig)
+                   snapshotConfig: snapshotConfigClone)
         }
     }
 
