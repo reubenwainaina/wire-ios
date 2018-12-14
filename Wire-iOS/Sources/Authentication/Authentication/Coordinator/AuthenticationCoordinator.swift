@@ -317,7 +317,7 @@ extension AuthenticationCoordinator {
 
     func makeUnregisteredUser() -> UnregisteredUser {
         let user = UnregisteredUser()
-        user.accentColorValue = UIColor.indexedAccentColor()
+        user.accentColorValue = UIColor.indexedAccent
         return user
     }
 
@@ -740,7 +740,7 @@ extension AuthenticationCoordinator {
             presentAlert(for: marketingConsentAlertModel)
 
         case let .createTeam(teamName, email, activationCode, _, fullName, password):
-            let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
+            let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccent)
             registrationStatus.create(team: unregisteredTeam)
 
         default:
