@@ -20,13 +20,28 @@ import XCTest
 @testable import Wire
 
 extension XCTestCase {
+
+    fileprivate static var _accentColor: ZMAccentColor!
+
+    /// If this is set the accent color will be overriden for the tests
+    var accentColor: ZMAccentColor {
+        set {
+            UIColor.accentOverride = newValue
+        }
+        get {
+            return UIColor.accentOverride
+        }
+    }
+}
+
+extension XCTestCase {
     
-    fileprivate static var _uiMOC: NSManagedObjectContext! ///TODO: init
+    fileprivate static var _uiContext: NSManagedObjectContext!
 
     var uiContext: NSManagedObjectContext! {
         get {
-            guard XCTestCase._uiMOC == nil else {
-                return XCTestCase._uiMOC
+            guard XCTestCase._uiContext == nil else {
+                return XCTestCase._uiContext
             }
 
 
@@ -46,7 +61,7 @@ extension XCTestCase {
                                                                     dispatchGroup: nil,
                                                                     startedMigrationCallback: nil,
                                                                     completionHandler: { contextDirectory in
-                                                                        XCTestCase._uiMOC = contextDirectory.uiContext
+                                                                        XCTestCase._uiContext = contextDirectory.uiContext
 
                                                                         contextExpectation.fulfill()
 
@@ -55,11 +70,11 @@ extension XCTestCase {
             // Wait for the async request to complete
             waitForExpectations(timeout: 2, handler: nil)
 
-            return XCTestCase._uiMOC
+            return XCTestCase._uiContext
         }
 
         set {
-            XCTestCase._uiMOC = newValue
+            XCTestCase._uiContext = newValue
         }
     }
 
@@ -85,11 +100,12 @@ extension XCTestCase {
         return client
     }
 
+    //MARK: - color
+
     func resetColorScheme() {
         ColorScheme.default.variant = .light
 
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-
 }

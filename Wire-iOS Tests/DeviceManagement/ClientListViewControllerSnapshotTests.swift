@@ -20,8 +20,15 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
+open class SnapshotTestCase: XCTestCase {
+    override open func setUp() {
+        super.setUp()
 
-final class ClientListViewControllerSnapshotTests: XCTestCase {
+        accentColor = .vividRed
+    }
+}
+
+final class ClientListViewControllerSnapshotTests: SnapshotTestCase {
     var sut: ClientListViewController!
     var mockUser: MockUser!
     var selfClient: UserClient!
@@ -46,7 +53,6 @@ final class ClientListViewControllerSnapshotTests: XCTestCase {
     }
 
     func testThatTableViewDoesNotOverlapNavigationBar() {
-       // record = true
 
         let numDevice = 4
 

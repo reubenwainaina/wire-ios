@@ -26,7 +26,6 @@
 @import WireExtensionComponents;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 
 @implementation UIColor (WAZExtensions)
 
@@ -36,40 +35,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         editableSelf.accentColorValue = accentColor;
     }];
-}
-
-+ (ZMAccentColor)accentOverrideColor {
-    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
-
-    return editableSelf.accentColorValue;
-}
-
-
-+ (ZMAccentColor)indexedAccentColor
-{
-	// priority 1: overriden color
-	if (overridenAccentColor != ZMAccentColorUndefined) {
-		return overridenAccentColor;
-	}
-	
-	// priority 2: color from self user
-	ZMUser *selfUser = [ZMUser selfUserInUserSession:[SessionManager shared].activeUserSession];
-	ZMAccentColor selfAccentColor = selfUser.accentColorValue;
-	if (selfUser && (selfAccentColor != ZMAccentColorUndefined)) {
-		return selfAccentColor;
-	}
-	
-	// priority 3: default color
-	return ZMAccentColorStrongBlue;
-}
-
-+ (void)setAccentOverrideColor:(ZMAccentColor)overrideColor
-{
-    if (overridenAccentColor == overrideColor) {
-        return;
-    }
-    
-    overridenAccentColor = overrideColor;
 }
 
 - (BOOL)isEqualTo:(id)object;

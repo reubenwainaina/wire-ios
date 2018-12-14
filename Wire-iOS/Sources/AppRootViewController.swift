@@ -210,7 +210,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
         case .unauthenticated(error: let error):
-            UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
+
+
+            UIColor.accentOverride = ZMUser.pickRandomAcceptableAccentColor()
+
             mainWindow.tintColor = UIColor.accent()
 
             // Only execute handle events if there is no current flow
@@ -233,7 +236,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             viewController = KeyboardAvoidingViewController(viewController: navigationController)
 
         case .authenticated(completedRegistration: let completedRegistration):
-            UIColor.setAccentOverride(.undefined)
+            UIColor.accentOverride = .undefined
+
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()

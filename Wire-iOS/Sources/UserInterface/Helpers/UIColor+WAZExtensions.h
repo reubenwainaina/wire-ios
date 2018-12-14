@@ -24,14 +24,8 @@
 
 @interface UIColor (WAZExtensions)
 
-/// Set override accent color. Can set to ZMAccentColorUndefined to remove override.
-+ (void)setAccentOverrideColor:(ZMAccentColor)overrideColor;
-+ (ZMAccentColor)accentOverrideColor;
-
 /// Set accent color on self user to this index.
 + (void)setAccentColor:(ZMAccentColor)accentColor;
-
-+ (ZMAccentColor)indexedAccentColor;
 
 - (BOOL)isEqualTo:(id)object;
 
