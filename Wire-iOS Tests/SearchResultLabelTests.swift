@@ -35,7 +35,9 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    fileprivate func performTest(file: StaticString = #file, line: UInt = #line) {
+    fileprivate func performTest(file: StaticString = #file,
+								 testName: String = #function,
+								 line: UInt = #line) {
         let textCombinations = Set<String>(arrayLiteral: "Very short text", "Very very long text Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
 
         let queryCombinations = Set<String>(arrayLiteral: "", "Short", "Very", "very long", "veniam")
@@ -77,7 +79,10 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             mockBackgroundView.addSubview($0.result)
 
             verify(view: mockBackgroundView,
-                   snapshotConfig: SnapshotConfig(identifier: identifier))
+                   snapshotConfig: SnapshotConfig(identifier: identifier,
+												  file: file,
+												  testName: testName,
+												  line: line))
             
             return .none
             }.count, 0, line: #line)

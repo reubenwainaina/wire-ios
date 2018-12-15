@@ -276,7 +276,11 @@ extension ZMSnapshotTestCase {
 	
 	/// Performs an assertion with the given view and the recorded snapshot.
 	func verify(view: UIView,
-				snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+				snapshotConfig: SnapshotConfig = SnapshotConfig(
+		file: #file,
+		testName: #function,
+		line: #line
+		)) {
 		let container = containerView(with: view)
 		if assertEmptyFrame(container, file: snapshotConfig.file, line: snapshotConfig.line) {
 			return
@@ -353,7 +357,9 @@ extension ZMSnapshotTestCase {
 	/// the common iPhones in Portrait and iPad in Landscape and Portrait.
 	/// This method only makes sense for views that will be on presented fullscreen.
 	func verifyInAllPhoneWidths(view: UIView,
-								snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+								snapshotConfig: SnapshotConfig = SnapshotConfig(file: #file,
+																				testName: #function,
+																				line: #line)) {
 		assertAmbigousLayout(view, file: snapshotConfig.file, line: snapshotConfig.line)
 		
 		for width in phoneWidths() {
@@ -365,7 +371,9 @@ extension ZMSnapshotTestCase {
 	}
 	
 	func verifyInAllTabletWidths(view: UIView,
-								 snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+								 snapshotConfig: SnapshotConfig = SnapshotConfig(file: #file,
+																				 testName: #function,
+																				 line: #line)) {
 		assertAmbigousLayout(view, file: snapshotConfig.file, line: snapshotConfig.line)
 		for width in tabletWidths() {
 			verifyView(view: view,
