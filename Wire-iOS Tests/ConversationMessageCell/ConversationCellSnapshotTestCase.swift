@@ -85,7 +85,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
         }
 
         verifyInAllPhoneWidths(view: stackView,
-                               snapshotConfig: SnapshotConfig(tolerance: tolerance),
+							   snapshotConfig: SnapshotConfig(tolerance: Float(tolerance)),
 							   file: file,
 							   testName: testName,
 							   line: line)

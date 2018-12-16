@@ -40,7 +40,6 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         widthConstraint = sut.widthAnchor.constraint(equalToConstant: 340)
         widthConstraint.isActive = true
-        sut.setNeedsLayout()
         sut.layoutIfNeeded()
     }
     

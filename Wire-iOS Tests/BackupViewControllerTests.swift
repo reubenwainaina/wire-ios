@@ -37,7 +37,7 @@ class BackupViewControllerTests: ZMSnapshotTestCase {
         // GIVEN
         let sut = BackupViewController(backupSource: MockBackupSource())
         // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
+        self.verifyInIPhoneSize(viewController: sut)
     }
     
     func testLoading() {
@@ -46,7 +46,7 @@ class BackupViewControllerTests: ZMSnapshotTestCase {
         sut.view.layer.speed = 0
         sut.tableView(UITableView(), didSelectRowAt: IndexPath(row: 1, section: 0))
         // WHEN && THEN
-        self.verifyInIPhoneSize(view: sut.view)
+        self.verifyInIPhoneSize(viewController: sut)
     }
 }
 

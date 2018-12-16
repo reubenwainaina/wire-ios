@@ -23,10 +23,6 @@ import MapKit
 
 class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-
     typealias CellConfiguration = (MockMessage) -> Void
 
     func testThatItRendersLocationCellWithAddressCorrect() {

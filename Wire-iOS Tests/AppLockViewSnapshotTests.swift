@@ -35,6 +35,6 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
 
     func testForReauthUI(){
         sut.showReauth = true
-        verifyInAllDeviceSizes(view: sut) ///TODO: line, file are not passed??
+        verifyInAllDeviceSizes(view: sut)
     }
 }

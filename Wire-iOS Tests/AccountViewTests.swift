@@ -31,7 +31,7 @@ class AccountViewTests: ZMSnapshotTestCase {
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
         let sut = PersonalAccountView(account: account)
         // WHEN && THEN
-		self.verify(view: sut.snapshotView(), snapshotConfig: SnapshotConfig()) ///TODO: find a way to pass function name
+		self.verify(view: sut.snapshotView(), snapshotConfig: SnapshotConfig())
     }
 
     func testThatItShowsBasicAccountSelected_Personal() {

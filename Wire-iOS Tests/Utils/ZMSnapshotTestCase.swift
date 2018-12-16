@@ -275,31 +275,6 @@ extension ZMSnapshotTestCase {
 				file: StaticString = #file,
 				testName: String = #function,
 				line: UInt = #line) {
-		let container = containerView(with: view)
-		if assertEmptyFrame(container, file: file, line: line) {
-			return
-		}
-		
-		/*
-		var finalIdentifier: String?
-		
-		if 0 == (snapshotConfig.identifier?.count ?? 0) {
-		if let deviceName = snapshotConfig.deviceName,
-		deviceName.count > 0 {
-		finalIdentifier = deviceName
-		}
-		} else {
-		if let deviceName = snapshotConfig.deviceName,
-		deviceName.count > 0 {
-		finalIdentifier = "\(snapshotConfig.identifier ?? "")-\(deviceName)"
-		} else {
-		finalIdentifier = "\(snapshotConfig.identifier ?? "")"
-		}
-		}
-		
-		///TODO: one more var?
-		snapshotConfig.identifier = finalIdentifier
-		*/
 		
 		snapshotConfig.configuration?(view)
 		
@@ -308,13 +283,12 @@ extension ZMSnapshotTestCase {
 		}
 		
 		view.layer.speed = 0 // freeze animations for deterministic tests
-		snapshotVerify(view: container,
+		snapshotVerify(view: view,
 					   snapshotConfig: snapshotConfig,
 					   file: file,
 					   testName: testName,
 						line: line)
 		
-		assertAmbigousLayout(container, file: file, line: line)
 	}
 	
 	/// Performs an assertion with the given view and the recorded snapshot with the custom width
@@ -391,6 +365,19 @@ extension ZMSnapshotTestCase {
 				line: line)
 
 		}
+	}
+	
+	func verifyInIPhoneSize(viewController: UIViewController,
+							snapshotConfig: SnapshotConfig = SnapshotConfig(),
+							file: StaticString = #file,
+							testName: String = #function,
+							line: UInt = #line) {
+		///TODO: check the file name
+		assertSnapshot(matching: viewController,
+					   as: .image(on: .iPhoneSe(.portrait)),
+					   file: file,
+					   testName:testName,
+					   line: line)
 	}
 	
 	/// verify the snapshot with default iphone size
