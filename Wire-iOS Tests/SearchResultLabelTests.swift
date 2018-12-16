@@ -79,10 +79,10 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             mockBackgroundView.addSubview($0.result)
 
             verify(view: mockBackgroundView,
-                   snapshotConfig: SnapshotConfig(identifier: identifier,
+                   snapshotConfig: SnapshotConfig(identifier: identifier),
 												  file: file,
 												  testName: testName,
-												  line: line))
+												  line: line)
             
             return .none
             }.count, 0, line: #line)

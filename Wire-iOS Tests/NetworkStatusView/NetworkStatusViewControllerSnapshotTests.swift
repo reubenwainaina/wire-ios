@@ -72,7 +72,9 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    fileprivate func verify(for newState: ZMNetworkState, file: StaticString = #file, line: UInt = #line) {
+    fileprivate func verify(for newState: ZMNetworkState, file: StaticString = #file,
+							testName: String = #function,
+							line: UInt = #line) {
         // GIVEN
         sut.didChangeAvailability(newState: newState)
 
@@ -82,7 +84,7 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
 
         // THEN
         verify(view: mockContainerViewController.view,
-               snapshotConfig: SnapshotConfig(file: file, line: line))
+			   file: file, testName: testName, line: line)
     }
 
     func testOnlineState() {

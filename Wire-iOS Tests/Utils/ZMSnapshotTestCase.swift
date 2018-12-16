@@ -183,20 +183,13 @@ struct SnapshotConfig {
 	var suffix: NSOrderedSet? = nil//FBSnapshotTestCaseDefaultSuffixes(),
 	var tolerance: CGFloat = 0
 	var configuration: Configuration? = nil
-	var file: StaticString = #file
-	var testName: String = #function
-	var line: UInt = #line
 	
 	init(extraLayoutPass: Bool = false,
 		 deviceName: String? = nil,
 		 identifier: String? = nil,
 		 suffix: NSOrderedSet? = nil,//FBSnapshotTestCaseDefaultSuffixes(),
 		tolerance: CGFloat = 0,
-		configuration: Configuration? = nil,
-		file: StaticString = #file,
-		testName: String = #function,
-		line: UInt = #line
-		) {
+		configuration: Configuration? = nil) {
 		
 		self.extraLayoutPass = extraLayoutPass
 		self.deviceName = deviceName
@@ -204,9 +197,6 @@ struct SnapshotConfig {
 		self.suffix = suffix
 		self.tolerance = tolerance
 		self.configuration = configuration
-		self.file = file
-		self.testName = testName
-		self.line = line
 	}
 }
 
@@ -224,24 +214,26 @@ extension ZMSnapshotTestCase {
 	}
 	
 	private func snapshotVerify(view: UIView,
-								snapshotConfig: SnapshotConfig) {
+								snapshotConfig: SnapshotConfig,
+								file: StaticString = #file,
+								testName: String = #function,
+								line: UInt = #line) {
 		
-		var snapshotConfigClone = snapshotConfig
-		
-		if let identifier = snapshotConfigClone.identifier {
-			snapshotConfigClone.testName = snapshotConfigClone.testName + identifier
+		var customTestName = testName
+		if let identifier = snapshotConfig.identifier {
+			customTestName += identifier
 		}
 		
-		if let deviceName = snapshotConfigClone.deviceName {
-			snapshotConfigClone.testName = snapshotConfigClone.testName + deviceName
+		if let deviceName = snapshotConfig.deviceName {
+			customTestName += deviceName
 		}
 		
 		///TODO: more argument
 		assertSnapshot(matching: view,
 					   as: .image,
-					   file: snapshotConfigClone.file,
-					   testName:snapshotConfigClone.testName,
-					   line: snapshotConfigClone.line)
+					   file: file,
+					   testName:customTestName,
+					   line: line)
 		
 	}
 	
@@ -276,13 +268,12 @@ extension ZMSnapshotTestCase {
 	
 	/// Performs an assertion with the given view and the recorded snapshot.
 	func verify(view: UIView,
-				snapshotConfig: SnapshotConfig = SnapshotConfig(
-		file: #file,
-		testName: #function,
-		line: #line
-		)) {
+				snapshotConfig: SnapshotConfig = SnapshotConfig(),
+				file: StaticString = #file,
+				testName: String = #function,
+				line: UInt = #line) {
 		let container = containerView(with: view)
-		if assertEmptyFrame(container, file: snapshotConfig.file, line: snapshotConfig.line) {
+		if assertEmptyFrame(container, file: file, line: line) {
 			return
 		}
 		
@@ -315,16 +306,21 @@ extension ZMSnapshotTestCase {
 		
 		view.layer.speed = 0 // freeze animations for deterministic tests
 		snapshotVerify(view: container,
-					   snapshotConfig: snapshotConfig)
+					   snapshotConfig: snapshotConfig,
+					   file: file,
+					   testName: testName,
+						line: line)
 		
-		assertAmbigousLayout(container, file: snapshotConfig.file, line: snapshotConfig.line)
+		assertAmbigousLayout(container, file: file, line: line)
 	}
 	
 	/// Performs an assertion with the given view and the recorded snapshot with the custom width
 	func verifyView(view: UIView,
 					width: CGFloat,
-					snapshotConfig: SnapshotConfig
-		) {
+					snapshotConfig: SnapshotConfig,
+		file: StaticString = #file,
+		testName: String = #function,
+		line: UInt = #line) {
 		let container = containerView(with: view)
 		
 		container.translatesAutoresizingMaskIntoConstraints = false
@@ -334,7 +330,7 @@ extension ZMSnapshotTestCase {
 		
 		container.layoutIfNeeded()
 		
-		if assertEmptyFrame(container, file: snapshotConfig.file, line: snapshotConfig.line) {
+		if assertEmptyFrame(container, file: file, line: line) {
 			return
 		}
 		
@@ -350,35 +346,47 @@ extension ZMSnapshotTestCase {
 		snapshotConfigClone.identifier = "\(Int(width))"
 		
 		snapshotVerify(view: container,
-					   snapshotConfig: snapshotConfigClone)
+					   snapshotConfig: snapshotConfigClone,
+			file: file,
+			testName: testName,
+			line: line)
+
 	}
 	
 	/// Performs multiple assertions with the given view using the screen sizes of
 	/// the common iPhones in Portrait and iPad in Landscape and Portrait.
 	/// This method only makes sense for views that will be on presented fullscreen.
 	func verifyInAllPhoneWidths(view: UIView,
-								snapshotConfig: SnapshotConfig = SnapshotConfig(file: #file,
-																				testName: #function,
-																				line: #line)) {
-		assertAmbigousLayout(view, file: snapshotConfig.file, line: snapshotConfig.line)
+								snapshotConfig: SnapshotConfig = SnapshotConfig(),
+		file: StaticString = #file,
+		testName: String = #function,
+		line: UInt = #line) {
+		assertAmbigousLayout(view, file: file, line: line)
 		
 		for width in phoneWidths() {
 			verifyView(view: view,
 					   width: width,
-					   snapshotConfig: snapshotConfig
-			)
+					   snapshotConfig: snapshotConfig,
+				file: file,
+				testName: testName,
+				line: line)
 		}
 	}
 	
 	func verifyInAllTabletWidths(view: UIView,
-								 snapshotConfig: SnapshotConfig = SnapshotConfig(file: #file,
-																				 testName: #function,
-																				 line: #line)) {
-		assertAmbigousLayout(view, file: snapshotConfig.file, line: snapshotConfig.line)
+								 snapshotConfig: SnapshotConfig = SnapshotConfig(),
+		file: StaticString = #file,
+		testName: String = #function,
+		line: UInt = #line) {
+		assertAmbigousLayout(view, file: file, line: line)
 		for width in tabletWidths() {
 			verifyView(view: view,
 					   width: width,
-					   snapshotConfig: snapshotConfig)
+					   snapshotConfig: snapshotConfig,
+				file: file,
+				testName: testName,
+				line: line)
+
 		}
 	}
 	
@@ -387,8 +395,11 @@ extension ZMSnapshotTestCase {
 	/// - Parameters:
 	///   - view: the view to verify
 	func verifyInIPhoneSize(view: UIView,
-							snapshotConfig: SnapshotConfig = SnapshotConfig()) {
-		
+							snapshotConfig: SnapshotConfig = SnapshotConfig(),
+		file: StaticString = #file,
+		testName: String = #function,
+		line: UInt = #line) {
+
 		view.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			view.heightAnchor.constraint(equalToConstant: defaultIPhoneSize.height),
@@ -398,11 +409,18 @@ extension ZMSnapshotTestCase {
 		view.layoutIfNeeded()
 		
 		verify(view: view,
-			   snapshotConfig: snapshotConfig)
+			   snapshotConfig: snapshotConfig,
+			file: file,
+			testName: testName,
+			line: line)
+
 	}
 	
 	func verifyInAllColorSchemes(view: UIView,
-								 snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+								 snapshotConfig: SnapshotConfig = SnapshotConfig(),
+		file: StaticString = #file,
+		testName: String = #function,
+		line: UInt = #line) {
 		if var themeable = view as? Themeable {
 			themeable.colorSchemeVariant = .light
 			snapshotBackgroundColor = .white
@@ -411,13 +429,20 @@ extension ZMSnapshotTestCase {
 			snapshotConfigLightTheme.identifier = "LightTheme"
 			
 			
-			verify(view: view, snapshotConfig: snapshotConfigLightTheme)
+			verify(view: view, snapshotConfig: snapshotConfigLightTheme,
+				   file: file,
+				   testName: testName,
+				   line: line)
 			themeable.colorSchemeVariant = .dark
 			snapshotBackgroundColor = .black
 			
 			var snapshotConfigDarkTheme = snapshotConfig
 			snapshotConfigDarkTheme.identifier = "DarkTheme"
-			verify(view: view, snapshotConfig: snapshotConfigDarkTheme)
+			verify(view: view, snapshotConfig: snapshotConfigDarkTheme,
+				   file: file,
+				   testName: testName,
+				   line: line)
+
 		} else {
 			XCTFail("View doesn't support Themable protocol")
 		}
@@ -428,19 +453,27 @@ extension ZMSnapshotTestCase {
 		viewController: UIViewController,
 		tolerance: Float = 0,
 		file: StaticString = #file,
+		testName: String = #function,
 		line: UInt = #line
 		) {
 		viewController.additionalSafeAreaInsets = UIEdgeInsets(top: 44, left: 0, bottom: 34, right: 0)
 		viewController.viewSafeAreaInsetsDidChange()
 		viewController.view.frame = CGRect(x: 0, y: 0, width: 375, height: 812)
-		verify(view: viewController.view)
+		verify(view: viewController.view,
+			   file: file,
+			   testName: testName,
+			   line: line)
+
 	}
 	
 	// MARK: - verify the snapshots in multiple devices
 	
 	func verifyMultipleSize(view: UIView,
 							inSizes sizes: [String:CGSize],
-							snapshotConfig: SnapshotConfig = SnapshotConfig()
+							snapshotConfig: SnapshotConfig = SnapshotConfig(),
+							file: StaticString = #file,
+							testName: String = #function,
+							line: UInt = #line
 		) {
 		for (deviceName, size) in sizes {
 			view.frame = CGRect(origin: .zero, size: size)
@@ -455,7 +488,11 @@ extension ZMSnapshotTestCase {
 			snapshotConfigClone.deviceName = deviceName
 			
 			verify(view: view,
-				   snapshotConfig: snapshotConfigClone)
+				   snapshotConfig: snapshotConfigClone,
+				   file: file,
+				   testName: testName,
+				   line: line)
+
 		}
 	}
 	

@@ -44,12 +44,13 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     private func verify(
         _ conversation: ZMConversation,
         file: StaticString = #file,
+		testName: String = #function,
         line: UInt = #line
         ) {
         sut.conversation = conversation
         
         verify(view: sut,
-               snapshotConfig: SnapshotConfig(file: file, line: line))
+			   file: file, testName: testName, line: line)
     }
     
     // MARK: - Tests

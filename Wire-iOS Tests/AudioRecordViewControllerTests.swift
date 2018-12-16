@@ -61,10 +61,10 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
         line: UInt = #line) {
         verifyInAllPhoneWidths(view: sut.prepareForSnapshot(),
                                snapshotConfig: SnapshotConfig(
-                               tolerance: 0.05,
+                               tolerance: 0.05),
                                file: file,
                                testName: testName,
-                               line: line))
+                               line: line)
     }
 
     func testThatItRendersViewControllerCorrectlyState_Recording() {
