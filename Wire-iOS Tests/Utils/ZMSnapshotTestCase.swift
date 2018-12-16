@@ -181,14 +181,14 @@ struct SnapshotConfig {
 	var deviceName: String? = nil
 	var identifier: String? = nil
 	var suffix: NSOrderedSet? = nil//FBSnapshotTestCaseDefaultSuffixes(),
-	var tolerance: CGFloat = 0
+	var tolerance: Float = 0
 	var configuration: Configuration? = nil
 	
 	init(extraLayoutPass: Bool = false,
 		 deviceName: String? = nil,
 		 identifier: String? = nil,
 		 suffix: NSOrderedSet? = nil,//FBSnapshotTestCaseDefaultSuffixes(),
-		tolerance: CGFloat = 0,
+		tolerance: Float = 0,
 		configuration: Configuration? = nil) {
 		
 		self.extraLayoutPass = extraLayoutPass
@@ -229,8 +229,11 @@ extension ZMSnapshotTestCase {
 		}
 		
 		///TODO: more argument
+		let precision: Float = 1-snapshotConfig.tolerance
+//		let snapshotting = Snapshotting.image //.image(precision: precision)
+		
 		assertSnapshot(matching: view,
-					   as: .image,
+					   as: .image(precision: precision),
 					   file: file,
 					   testName:customTestName,
 					   line: line)
@@ -475,7 +478,7 @@ extension ZMSnapshotTestCase {
 							testName: String = #function,
 							line: UInt = #line
 		) {
-		for (deviceName, size) in sizes {
+		for (deviceName, size) in sizes { ///TODO: use build-in method?
 			view.frame = CGRect(origin: .zero, size: size)
 			if let configuration = snapshotConfig.configuration {
 				//                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
@@ -498,18 +501,31 @@ extension ZMSnapshotTestCase {
 	
 	
 	func verifyInAllIPhoneSizes(view: UIView,
-								snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+								snapshotConfig: SnapshotConfig = SnapshotConfig(),
+								file: StaticString = #file,
+								testName: String = #function,
+								line: UInt = #line) {
 		verifyMultipleSize(view: view,
 						   inSizes: XCTestCase.phoneScreenSizes,
-						   snapshotConfig: snapshotConfig)
+						   snapshotConfig: snapshotConfig,
+			file: file,
+			testName: testName,
+			line: line)
+
 	}
 	
 	func verifyInAllDeviceSizes(view: UIView,
-								snapshotConfig: SnapshotConfig = SnapshotConfig()) {
+								snapshotConfig: SnapshotConfig = SnapshotConfig(),
+		file: StaticString = #file,
+		testName: String = #function,
+		line: UInt = #line) {
 		
 		verifyMultipleSize(view: view,
 						   inSizes: XCTestCase.deviceScreenSizes,
-						   snapshotConfig: snapshotConfig)
+						   snapshotConfig: snapshotConfig,
+						   file: file,
+						   testName: testName,
+						   line: line)
 	}
 	
 }
@@ -548,8 +564,11 @@ extension ZMSnapshotTestCase {
 		waitForExpectations(timeout: 2, handler: nil)
 	}
 	
-	func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+	func verifyAlertController(_ controller: UIAlertController,
+							   file: StaticString = #file,
+							   testName: String = #function,
+							   line: UInt = #line) {
 		presentViewController(controller, file: file, line: line)
-		verify(view: controller.view)
+		verify(view: controller.view, file: file, testName: testName, line: line)
 	}
 }
