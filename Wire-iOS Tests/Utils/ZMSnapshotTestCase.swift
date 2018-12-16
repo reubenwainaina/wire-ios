@@ -183,6 +183,7 @@ struct SnapshotConfig {
 	var suffix: NSOrderedSet? = nil//FBSnapshotTestCaseDefaultSuffixes(),
 	var tolerance: Float = 0
 	var configuration: Configuration? = nil
+	var viewConfig: SnapshotTesting.ViewImageConfig?
 	
 	init(extraLayoutPass: Bool = false,
 		 deviceName: String? = nil,
@@ -213,12 +214,8 @@ extension ZMSnapshotTestCase {
 		return container
 	}
 	
-	private func snapshotVerify(view: UIView,
-								snapshotConfig: SnapshotConfig,
-								file: StaticString = #file,
-								testName: String = #function,
-								line: UInt = #line) {
-		
+	
+	func customTestName(testName: String, snapshotConfig: SnapshotConfig) -> String {
 		var customTestName = testName
 		if let identifier = snapshotConfig.identifier {
 			customTestName += identifier
@@ -228,6 +225,15 @@ extension ZMSnapshotTestCase {
 			customTestName += deviceName
 		}
 		
+		return customTestName
+	}
+	
+	private func snapshotVerify(view: UIView,
+								snapshotConfig: SnapshotConfig,
+								file: StaticString = #file,
+								testName: String = #function,
+								line: UInt = #line) {
+		
 		///TODO: more argument
 		let precision: Float = 1-snapshotConfig.tolerance
 //		let snapshotting = Snapshotting.image //.image(precision: precision)
@@ -235,7 +241,7 @@ extension ZMSnapshotTestCase {
 		assertSnapshot(matching: view,
 					   as: .image(precision: precision),
 					   file: file,
-					   testName:customTestName,
+					   testName: customTestName(testName: testName, snapshotConfig: snapshotConfig),
 					   line: line)
 		
 	}
@@ -467,12 +473,6 @@ extension ZMSnapshotTestCase {
 		) {
 		for (deviceName, size) in sizes { ///TODO: use build-in method?
 			view.frame = CGRect(origin: .zero, size: size)
-			if let configuration = snapshotConfig.configuration {
-				//                let iPad = size.equalTo(XCTestCase.DeviceSizeIPadLandscape) || size.equalTo(XCTestCase.DeviceSizeIPadPortrait)
-				UIView.performWithoutAnimation({
-					configuration(view) ///TODO: check still ned iPad argu?
-				})
-			}
 			
 			var snapshotConfigClone = snapshotConfig
 			snapshotConfigClone.deviceName = deviceName
@@ -485,8 +485,36 @@ extension ZMSnapshotTestCase {
 
 		}
 	}
-	
-	
+
+	func verifyMultipleConfig(viewController: UIViewController,
+							inSizes sizes: [String:SnapshotTesting.ViewImageConfig],
+							snapshotConfig: SnapshotConfig = SnapshotConfig(),
+							file: StaticString = #file,
+							testName: String = #function,
+							line: UInt = #line
+		) {
+		for (deviceName, viewConfig) in sizes { ///TODO: use build-in method?
+//			view.frame = CGRect(origin: .zero, size: size)
+			
+			var snapshotConfigClone = snapshotConfig
+			snapshotConfigClone.deviceName = deviceName
+//			snapshotConfigClone.viewConfig = viewConfig
+			
+			assertSnapshot(matching: viewController,
+						   as: .image(on: viewConfig),
+						   file: file,
+						   testName:customTestName(testName: testName, snapshotConfig: snapshotConfigClone),
+						   line: line)
+
+//			verify(view: view,
+//				   snapshotConfig: snapshotConfigClone,
+//				   file: file,
+//				   testName: testName,
+//				   line: line)
+			
+		}
+	}
+
 	func verifyInAllIPhoneSizes(view: UIView,
 								snapshotConfig: SnapshotConfig = SnapshotConfig(),
 								file: StaticString = #file,
@@ -494,6 +522,30 @@ extension ZMSnapshotTestCase {
 								line: UInt = #line) {
 		verifyMultipleSize(view: view,
 						   inSizes: XCTestCase.phoneScreenSizes,
+						   snapshotConfig: snapshotConfig,
+						   file: file,
+						   testName: testName,
+						   line: line)
+		
+	}
+
+	
+	func verifyInAllIPhoneSizes(viewController: UIViewController,
+								snapshotConfig: SnapshotConfig = SnapshotConfig(),
+								file: StaticString = #file,
+								testName: String = #function,
+								line: UInt = #line) {
+		
+		let phoneScreenSizes: [String:SnapshotTesting.ViewImageConfig] = [
+			"iPhone-4_0_Inch": .iPhoneSe(.portrait),
+			"iPhone-4_7_Inch": .iPhone8(.portrait),
+			"iPhone-5_5_Inch": .iPhone8Plus(.portrait),
+			"iPhone-5_8_Inch": .iPhoneX(.portrait),
+			"iPhone-6_5_Inch": .iPhoneXsMax(.portrait)
+		]
+
+		verifyMultipleConfig(viewController: viewController,
+						   inSizes: phoneScreenSizes,
 						   snapshotConfig: snapshotConfig,
 			file: file,
 			testName: testName,

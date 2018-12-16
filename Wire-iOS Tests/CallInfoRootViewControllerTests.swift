@@ -31,7 +31,7 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
         
         // then
-        verifyInAllIPhoneSizes(view: sut.view)
+        verifyInAllIPhoneSizes(viewController: sut)
     }
     
     func testOneToOneOutgoingAudioRinging() {
