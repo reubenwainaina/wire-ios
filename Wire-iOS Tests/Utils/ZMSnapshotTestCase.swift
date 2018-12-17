@@ -183,8 +183,7 @@ struct SnapshotConfig {
 	var suffix: NSOrderedSet? = nil//FBSnapshotTestCaseDefaultSuffixes(),
 	var tolerance: Float = 0
 	var configuration: Configuration? = nil
-	var viewConfig: SnapshotTesting.ViewImageConfig?
-	
+
 	init(extraLayoutPass: Bool = false,
 		 deviceName: String? = nil,
 		 identifier: String? = nil,
@@ -236,8 +235,7 @@ extension ZMSnapshotTestCase {
 		
 		///TODO: more argument
 		let precision: Float = 1-snapshotConfig.tolerance
-//		let snapshotting = Snapshotting.image //.image(precision: precision)
-		
+
 		assertSnapshot(matching: view,
 					   as: .image(precision: precision),
 					   file: file,
@@ -471,7 +469,7 @@ extension ZMSnapshotTestCase {
 							testName: String = #function,
 							line: UInt = #line
 		) {
-		for (deviceName, size) in sizes { ///TODO: use build-in method?
+		for (deviceName, size) in sizes {
 			view.frame = CGRect(origin: .zero, size: size)
 			
 			var snapshotConfigClone = snapshotConfig
