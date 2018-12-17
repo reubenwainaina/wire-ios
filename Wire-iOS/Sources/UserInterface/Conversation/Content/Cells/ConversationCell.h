@@ -25,7 +25,6 @@
 
 @class ConversationCell;
 @class MessageToolboxView;
-@class LikeButton;
 @class LinkAttachment;
 @class ConversationCellBurstTimestampView;
 @class AdditionalMenuItem;

@@ -88,6 +88,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 @property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
 @property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
+@property (nonatomic, strong) UIImpactFeedbackGenerator *lightImpactFeedbackGenerator;
+
 @end
 
 
@@ -110,6 +112,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
+        self.lightImpactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     }
     
     return self;
@@ -442,9 +445,10 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             case MessageActionLike:
             {
                 BOOL liked = ![Message isLikedMessage:message];
+                [self.lightImpactFeedbackGenerator impactOccurred];
                 
                 NSIndexPath *indexPath = [self.conversationMessageWindowTableViewAdapter indexPathForMessage:message];
-                
+
                 [[ZMUserSession sharedSession] performChanges:^{
                     [Message setLikedMessage:message liked:liked];
                 }];

@@ -377,6 +377,7 @@ import WireSyncEngine
 
         // Prepare Animations
         let needsAnimation = animated && (showLikeButton ? likeButton.isHidden : !likeButton.isHidden)
+        let needsLikeAnimation = animated && !likeButton.isHidden && showLikeButton
 
         if showLikeButton && likeButton.isHidden {
             likeButton.alpha = 0
@@ -395,7 +396,7 @@ import WireSyncEngine
         likeButton.accessibilityLabel = message.liked ? "content.message.unlike".localized : "content.message.like".localized
         likeButton.setIcon(message.liked ? .liked : .like, with: .like, for: .normal)
         likeButton.setIcon(.liked, with: .like, for: .selected)
-        likeButton.setSelected(message.liked, animated: false)
+        likeButton.setSelected(message.liked, animated: needsLikeAnimation)
 
         // Animate Changes
         if needsAnimation {
