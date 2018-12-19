@@ -1,5 +1,5 @@
 github "wireapp/ocmock" "v3.4"
 
-github "pointfreeco/swift-snapshot-testing" ~> 1.0
+github "pointfreeco/swift-snapshot-testing" ~> 1.1
 
 github "wireapp/wire-ios-testing" ~> 17.0
