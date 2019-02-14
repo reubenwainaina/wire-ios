@@ -51,7 +51,7 @@ class UserCellTests: ZMSnapshotTestCase {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
         let mockUser = MockUser(for: user)
-        mockUser?.isServiceUser = true
+        mockUser.isServiceUser = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
@@ -69,8 +69,8 @@ class UserCellTests: ZMSnapshotTestCase {
     func testTrustedNonTeamUser() {
         let user = MockUser.mockUsers()[0]
         let mockUser = MockUser(for: user)
-        mockUser?.trusted = true
-        _ = mockUser?.feature(withUserClients: 1)
+        mockUser.trusted = true
+        _ = mockUser.feature(withUserClients: 1)
         
         verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
@@ -81,7 +81,7 @@ class UserCellTests: ZMSnapshotTestCase {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
         let mockUser = MockUser(for: user)
-        mockUser?.isGuestInConversation = true
+        mockUser.isGuestInConversation = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)
@@ -92,9 +92,9 @@ class UserCellTests: ZMSnapshotTestCase {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
         let mockUser = MockUser(for: user)
-        mockUser?.isGuestInConversation = true
-        mockUser?.expiresAfter = 5_200
-        mockUser?.handle = nil
+        mockUser.isGuestInConversation = true
+        mockUser.expiresAfter = 5_200
+        mockUser.handle = nil
 
         verifyInAllColorSchemes(view: cell {
             $0.configure(with: user, conversation: conversation)
@@ -105,9 +105,9 @@ class UserCellTests: ZMSnapshotTestCase {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
         let mockUser = MockUser(for: user)
-        mockUser?.trusted = true
-        mockUser?.isGuestInConversation = true
-        _ = mockUser?.feature(withUserClients: 1)
+        mockUser.trusted = true
+        mockUser.isGuestInConversation = true
+        mockUser.feature(withUserClients: 1)
         
         verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: user, conversation: conversation)

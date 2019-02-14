@@ -50,8 +50,8 @@ class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        MockUser.mockSelf()?.name = "Tarja Turunen"
-        MockUser.mockSelf()?.accentColorValue = .strongBlue
+        MockUser.mockSelf().name = "Tarja Turunen"
+        MockUser.mockSelf().accentColorValue = .strongBlue
 
         let conversation = MockConversation() as Any as! ZMConversation
         let assetCollection = MockCollection.empty

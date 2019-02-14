@@ -57,7 +57,6 @@ final class MockUserCopyable: MockUser, Copyable {
     required init!(jsonObject: [AnyHashable : Any]!) {
         super.init(jsonObject: jsonObject)
     }
-
 }
 
 final class UserConnectionViewTests: ZMSnapshotTestCase {

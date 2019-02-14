@@ -26,7 +26,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     override func setUp() {
         super.setUp()
         
-        MockUser.mockSelf()?.accentColorValue = .strongBlue
+        MockUser.mockSelf().accentColorValue = .strongBlue
     }
 
     // MARK: - Started a Conversation

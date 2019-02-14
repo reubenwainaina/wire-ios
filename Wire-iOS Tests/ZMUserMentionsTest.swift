@@ -28,7 +28,7 @@ class ZMUserMentionsTest: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        let mockUsers = MockUser.realMockUsers()!
+        let mockUsers = MockUser.realMockUsers()
         
         selfUser = MockUser.mockSelf()
         selfUser.name = "selfUser"
@@ -54,7 +54,7 @@ class ZMUserMentionsTest: XCTestCase {
     
     func testThatItSearchesByName() {
         // given
-        let userWithDifferentNameAndHandle = MockUser.realMockUsers()![2]
+        let userWithDifferentNameAndHandle = MockUser.realMockUsers()[2]
         userWithDifferentNameAndHandle.name = "user"
         userWithDifferentNameAndHandle.handle = "test"
         
@@ -71,7 +71,7 @@ class ZMUserMentionsTest: XCTestCase {
     
     func testThatItSearchesByHandle() {
         // given
-        let userWithDifferentNameAndHandle = MockUser.realMockUsers()![2]
+        let userWithDifferentNameAndHandle = MockUser.realMockUsers()[2]
         userWithDifferentNameAndHandle.name = "user"
         userWithDifferentNameAndHandle.handle = "test"
         
@@ -166,7 +166,7 @@ class ZMUserMentionsTest: XCTestCase {
     
     func testThatItFindsUsersWithEmoji() {
         // GIVEN
-        let mockUserWithEmoji = MockUser.realMockUsers()![0]
+        let mockUserWithEmoji = MockUser.realMockUsers()[0]
         mockUserWithEmoji.name = "😀 Hello world"
         
         let users: [UserType] = [mockUserWithEmoji]
@@ -180,7 +180,7 @@ class ZMUserMentionsTest: XCTestCase {
     
     func testThatItFindsUsersWithPunctuation() {
         // GIVEN
-        let mockUser = MockUser.realMockUsers()![0]
+        let mockUser = MockUser.realMockUsers()[0]
         mockUser.name = "@ööö"
         
         let users: [UserType] = [mockUser]

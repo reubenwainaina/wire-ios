@@ -57,7 +57,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         // GIVEN
         let type = ZMSystemMessageType.readReceiptsDisabled
         createMockMessage(type: type)
-        mockMessage.sender = MockUser.mockUsers()?.first
+        mockMessage.sender = MockUser.mockUsers().first
 
         // WHEN
         sut = ReadReceiptViewModel(icon: .eye,
@@ -73,7 +73,7 @@ final class ReadReceiptViewModelTests: XCTestCase {
         // GIVEN & WHEN
         let type = ZMSystemMessageType.readReceiptsEnabled
         createMockMessage(type: type)
-        mockMessage.sender = MockUser.mockUsers()?.first
+        mockMessage.sender = MockUser.mockUsers().first
 
         sut = ReadReceiptViewModel(icon: .eye,
                                    iconColor: UIColor.from(scheme: .textDimmed),

@@ -94,7 +94,7 @@ class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     
     func testUploadingCell_fromOtherUser() {
         let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.sender = MockUser.mockUsers().first!
         message.backingFileMessageData.transferState = .uploading
         message.backingFileMessageData.fileURL = nil
         
@@ -122,7 +122,7 @@ class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     
     func testDownloadingCell_fromOtherUser() {
         let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.sender = MockUser.mockUsers().first!
         message.backingFileMessageData.transferState = .downloading
         message.backingFileMessageData.progress = 0.75
         message.backingFileMessageData.fileURL = nil
@@ -148,7 +148,7 @@ class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     
     func testDownloadedCell_fromOtherUser() {
         let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.sender = MockUser.mockUsers().first!
         message.backingFileMessageData.transferState = .downloaded
         message.backingFileMessageData.fileURL = nil
         
@@ -173,7 +173,7 @@ class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     
     func testFailedDownloadCell_fromOtherUser() {
         let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.sender = MockUser.mockUsers().first!
         message.backingFileMessageData.transferState = .failedDownload
         message.backingFileMessageData.fileURL = nil
         
@@ -198,7 +198,7 @@ class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     
     func testFailedUploadCell_fromOtherUser() {
         let message = MockMessageFactory.fileTransferMessage()!
-        message.sender = MockUser.mockUsers()?.first!
+        message.sender = MockUser.mockUsers().first!
         message.backingFileMessageData.transferState = .failedUpload
         message.backingFileMessageData.fileURL = nil
         

@@ -17,9 +17,6 @@
 // 
 
 
-#import "MockUser.h"
-#import "MockConversation.h"
-
 static id<UserType> mockSelfUser = nil;
 
 @implementation MockUser
@@ -49,11 +46,6 @@ static id<UserType> mockSelfUser = nil;
     }
     
     return [self.name isEqual:[(ZMUser *)otherObject name]];
-}
-
-+ (NSArray *)mockUsers
-{
-    return [self realMockUsers];
 }
 
 + (NSArray *)realMockUsers
@@ -90,11 +82,6 @@ static id<UserType> mockSelfUser = nil;
 + (MockUser *)mockUserFor:(ZMUser *)user
 {
     return (MockUser *)user;
-}
-
-- (BOOL)isGuestInConversation:(ZMConversation *)conversation
-{
-    return self.isGuestInConversation;
 }
 
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session
@@ -192,15 +179,6 @@ static id<UserType> mockSelfUser = nil;
     return @[];
 }
 
-- (void)refreshData
-{
-    // no-op
-}
-
-- (void)connectWithMessage:(NSString * _Nonnull)message {
-    
-}
-
 - (void)imageDataFor:(enum ProfileImageSize)size queue:(dispatch_queue_t _Nonnull)queue completion:(void (^ _Nonnull)(NSData * _Nullable))completion {
     switch (size) {
         case ProfileImageSizePreview:
@@ -216,15 +194,6 @@ static id<UserType> mockSelfUser = nil;
     return self.isGuestInConversation;
 }
 
-
-- (void)requestCompleteProfileImage {
-    
-}
-
-
-- (void)requestPreviewProfileImage {
-    
-}
 
 - (Team *)team
 {

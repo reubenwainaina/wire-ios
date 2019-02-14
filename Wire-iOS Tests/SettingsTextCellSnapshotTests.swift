@@ -26,7 +26,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+        MockUser.mockSelf().name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
 
         sut = SettingsTextCell()
 

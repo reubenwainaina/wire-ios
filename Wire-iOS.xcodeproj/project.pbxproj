@@ -664,7 +664,6 @@
 		87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB03F1D3E44E600DE9575 /* AssetCell.swift */; };
 		87BEB0441D3E478500DE9575 /* AssetLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0431D3E478500DE9575 /* AssetLibrary.swift */; };
 		87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0D91C734D710094BFE9 /* MockConversation.m */; };
-		87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0DB1C734D710094BFE9 /* MockUser.m */; };
 		87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0DF1C734DA60094BFE9 /* MockLoader.m */; };
 		87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E11C734DB60094BFE9 /* MockMessage.swift */; };
 		87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */; };
@@ -1156,6 +1155,7 @@
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF44C6A42215861F007C5CDC /* MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D553661C86F0450026573C /* MockUserClient.swift */; };
+		EF44C6A322158313007C5CDC /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0DA1C734D710094BFE9 /* MockUser.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */; };
 		EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */; };
@@ -2307,7 +2307,7 @@
 		87BEB0431D3E478500DE9575 /* AssetLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetLibrary.swift; sourceTree = "<group>"; };
 		87BEB0D81C734D710094BFE9 /* MockConversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockConversation.h; sourceTree = "<group>"; };
 		87BEB0D91C734D710094BFE9 /* MockConversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockConversation.m; sourceTree = "<group>"; };
-		87BEB0DA1C734D710094BFE9 /* MockUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockUser.h; sourceTree = "<group>"; };
+		87BEB0DA1C734D710094BFE9 /* MockUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		87BEB0DB1C734D710094BFE9 /* MockUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockUser.m; sourceTree = "<group>"; };
 		87BEB0DE1C734DA60094BFE9 /* MockLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockLoader.h; sourceTree = "<group>"; };
 		87BEB0DF1C734DA60094BFE9 /* MockLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockLoader.m; sourceTree = "<group>"; };
@@ -4846,18 +4846,13 @@
 		87BEB0D71C734D550094BFE9 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				EF44C6A222158276007C5CDC /* MockUser */,
 				BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.h */,
 				BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */,
 				87BEB0D81C734D710094BFE9 /* MockConversation.h */,
 				87BEB0D91C734D710094BFE9 /* MockConversation.m */,
 				EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */,
 				EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */,
-				87BEB0DA1C734D710094BFE9 /* MockUser.h */,
-				87BEB0DB1C734D710094BFE9 /* MockUser.m */,
-				EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */,
-				EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */,
-				EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */,
-				EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */,
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
@@ -6359,6 +6354,19 @@
 				872C823B214A9B8500236A76 /* TextMessageMentionsTests.swift */,
 			);
 			path = ConversationCell;
+			sourceTree = "<group>";
+		};
+		EF44C6A222158276007C5CDC /* MockUser */ = {
+			isa = PBXGroup;
+			children = (
+				87BEB0DA1C734D710094BFE9 /* MockUser.swift */,
+				87BEB0DB1C734D710094BFE9 /* MockUser.m */,
+				EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */,
+				EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */,
+				EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */,
+				EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */,
+			);
+			path = MockUser;
 			sourceTree = "<group>";
 		};
 		EF5C844B21F2386A002481DE /* ConversationDetail */ = {
@@ -8253,7 +8261,6 @@
 				1661C74321A83B25003DCE1C /* ConversationAudioMessageCellTests.swift in Sources */,
 				EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */,
 				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
-				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
 				EF8DD911211E02BE00E970F1 /* MockMessage+Creation.swift in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
 				EF1FDC8421DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift in Sources */,
@@ -8270,6 +8277,7 @@
 				EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */,
 				8742FB801E8BD18900D046BC /* ConversationListAccessoryViewTests.swift in Sources */,
 				162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */,
+				EF44C6A322158313007C5CDC /* MockUser.swift in Sources */,
 				EF2EA63321F8AFB2000E12CA /* ServiceDetailViewControllerSnapshotTests.swift in Sources */,
 				BFE3FEEC20975D1E003D9AB5 /* CallStatusViewTests.swift in Sources */,
 				BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */,

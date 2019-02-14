@@ -34,21 +34,21 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testRenameConversation() {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
-        message.sender = MockUser.mockUsers()?.first
+        message.sender = MockUser.mockUsers().first
         
         verify(message: message)
     }
     
     func testAddParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.sender = MockUser.mockUsers().last
         
         verify(message: message)
     }
     
     func testAddParticipant_Service() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.sender = MockUser.mockUsers().last
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
         
         verify(message: message)
@@ -56,21 +56,21 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     
     func testAddManyParticipants() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.sender = MockUser.mockUsers().last
         
         verify(message: message)
     }
     
     func testRemoveParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.sender = MockUser.mockUsers().last
 
         verify(message: message, colorSchemes: [.light, .dark])
     }
 
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
-        message.sender = MockUser.mockUsers()?.last
+        message.sender = MockUser.mockUsers().last
         
         verify(message: message)
     }
@@ -136,7 +136,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
     func testReadReceiptIsOnByThirdPerson() {
         let message = MockMessageFactory.systemMessage(with: .readReceiptsEnabled)!
-        message.sender = MockUser.mockUsers()?.first
+        message.sender = MockUser.mockUsers().first
 
         verify(message: message)
     }
@@ -158,7 +158,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     
     func testIgnoredClient_other() {
         let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
-        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers()!.last]) as! Set<ZMUser>
+        message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers().last]) as! Set<ZMUser>
         
         verify(message: message)
     }
@@ -174,7 +174,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
         
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers().prefix(1))) as! Set<ZMUser>
         
         verify(message: message)
     }
@@ -182,7 +182,7 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_removedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
         
-        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
+        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers().prefix(1))) as! Set<ZMUser>
         
         verify(message: message)
     }
@@ -190,8 +190,8 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
     func testPotentialGap_addedAndRemovedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
         
-        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
-        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(1))) as! Set<ZMUser>
+        message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers().prefix(1))) as! Set<ZMUser>
+        message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers().suffix(1))) as! Set<ZMUser>
         
         verify(message: message)
     }
