@@ -110,14 +110,19 @@ import WireSyncEngine
         ])
     }
 
-    ///TODO:
-//    convenience init(for user: ZMUser?) {
-//    }
-
     class func selfUser(in session: ZMUserSession?) -> (ZMUser & ZMEditableUser)? {
+        let selfUser: Any
+        if mockSelfUser != nil {
+            selfUser = mockSelfUser
+        } else {
+            selfUser = mockSelf()
+        }
+
+        return selfUser as Any as! (ZMUser & ZMEditableUser)
     }
 
     class func setMockSelf(_ newMockUser: UserType?) {
+        mockSelfUser = newMockUser
     }
 
     var name: String?
@@ -147,7 +152,7 @@ import WireSyncEngine
     var usesCompanyLogin = false
     var readReceiptsEnabled = false
     var user: ZMUser?
-    var clients: Set<UserClientType?> = []
+    var clients: NSSet<UserClientType> = []
     var connection: ZMConnection?
     var contact: ZMAddressBookContact?
     var addressBookEntry: AddressBookEntry?
@@ -156,9 +161,11 @@ import WireSyncEngine
     private(set) var clientsRequiringUserAttention: Set<UserClient> = []
 
     func displayName(in conversation: MockConversation?) -> String? {
+        return displayName
     }
 
     func fetchUserClients() {
+        // no op
     }
 }
 
