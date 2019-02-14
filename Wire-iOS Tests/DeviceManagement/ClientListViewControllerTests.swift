@@ -30,7 +30,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
 
         let user = MockUser.mockUsers()[0]
-        mockUser = MockUser(for: user)
+        mockUser = MockUser.mockUser(for: user)
 
         selfClient = mockUserClient()
         client = mockUserClient()

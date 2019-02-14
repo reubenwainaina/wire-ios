@@ -33,7 +33,7 @@ extension MockUser {
             newClients.append(mockClient)
         }
 
-        clients = NSSet(newClients)
+//        clients = NSSet(newClients) ///TODO:
         return newClients as? [MockUserClient]
     }
 }

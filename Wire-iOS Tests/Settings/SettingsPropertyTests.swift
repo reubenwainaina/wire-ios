@@ -23,7 +23,11 @@ import XCTest
 @objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
     var enableReadReceipts: Bool = false
     var originalProfileImageData: Data!
-    
+
+    convenience init() {
+        self.init(jsonObject: nil)
+    }
+
     func deleteProfileImage() {
         // no-op
     }

@@ -18,7 +18,6 @@
 
 
 #import "MockLoader.h"
-#import "MockUser.h"
 #import "MockConversation.h"
 
 @implementation MockLoader

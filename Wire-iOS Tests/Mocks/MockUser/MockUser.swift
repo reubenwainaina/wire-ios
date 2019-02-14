@@ -19,28 +19,25 @@ import Foundation
 import WireSyncEngine
 
 @objcMembers class MockUser: NSObject, UserType, Mockable {
-    var isAccountDeleted: Bool = false
 
     static var mockSelfUser: UserType! = nil
 
+    var isAccountDeleted: Bool = false
     var displayName: String
-
     var initials: String?
-
     var connectionRequestMessage: String?
-
     var smallProfileImageCacheKey: String?
-
     var mediumProfileImageCacheKey: String?
-
     var previewImageData: Data?
-
     var completeImageData: Data?
 
     required init!(jsonObject: [AnyHashable : Any]!) {
+        displayName = ""
+
         super.init()
 
-        clients = []
+        ///TODO:
+//        clients = []
         isTeamMember = true
         for key: String in Array((jsonObject?.keys)!) as! [String] {
             if let value = jsonObject?[key] {
@@ -53,10 +50,11 @@ import WireSyncEngine
 
 
     func requestPreviewProfileImage() {
-
+        //no op
     }
 
     func requestCompleteProfileImage() {
+        //no op
     }
 
     func isGuest(in conversation: ZMConversation) -> Bool {
@@ -87,6 +85,7 @@ import WireSyncEngine
         return (user as Any as! MockUser)
     }
 
+    @objc
     class func mockUsers() -> [ZMUser] {
         return realMockUsers() as Any as! [ZMUser]
     }
@@ -159,7 +158,8 @@ import WireSyncEngine
     var usesCompanyLogin = false
     var readReceiptsEnabled = false
     var user: ZMUser?
-    var clients: NSSet<UserClientType> = []
+    ///TODO:
+//    var clients: NSSet<UserClientType> = []
     var connection: ZMConnection?
     var contact: ZMAddressBookContact?
     var addressBookEntry: AddressBookEntry?

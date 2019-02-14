@@ -22,8 +22,8 @@
 #import "ContactsDataSource.h"
 #import "ContactsDataSource+Private.h"
 #import "MockLoader.h"
-#import "MockUser.h"
 #import "MockConversation.h"
+//#import "Wire-iOS-Tests-Swift.h"
 
 @interface ContactsDataSourceTests : XCTestCase
 @property (nonatomic, strong) ContactsDataSource *dataSource;
