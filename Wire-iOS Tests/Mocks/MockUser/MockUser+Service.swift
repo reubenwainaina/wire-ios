@@ -34,7 +34,6 @@ extension MockUser {
         }
 
         clients = NSSet(newClients)
-        
         return newClients as? [MockUserClient]
     }
 }
