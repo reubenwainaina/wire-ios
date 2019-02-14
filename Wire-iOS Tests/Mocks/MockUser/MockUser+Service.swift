@@ -32,7 +32,9 @@ extension MockUser {
             mockClient.user = (self as Any as! ZMUser)
             newClients.append(mockClient)
         }
-        clients = Set(newClients)
+
+        clients = NSSet(newClients)
+        
         return newClients as? [MockUserClient]
     }
 }

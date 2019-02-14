@@ -50,7 +50,7 @@ class UserCellTests: ZMSnapshotTestCase {
     func testServiceUser() {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
+        let mockUser = MockUser.mockUser(for: user)
         mockUser.isServiceUser = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
@@ -68,7 +68,7 @@ class UserCellTests: ZMSnapshotTestCase {
     
     func testTrustedNonTeamUser() {
         let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
+        let mockUser = MockUser.mockUser(for: user)
         mockUser.trusted = true
         _ = mockUser.feature(withUserClients: 1)
         
@@ -80,7 +80,7 @@ class UserCellTests: ZMSnapshotTestCase {
     func testGuestUser() {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
+        let mockUser = MockUser.mockUser(for: user)
         mockUser.isGuestInConversation = true
         
         verifyInAllColorSchemes(view: cell({ (cell) in
@@ -91,7 +91,7 @@ class UserCellTests: ZMSnapshotTestCase {
     func testGuestUser_Wireless() {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
+        let mockUser = MockUser.mockUser(for: user)
         mockUser.isGuestInConversation = true
         mockUser.expiresAfter = 5_200
         mockUser.handle = nil
@@ -104,7 +104,7 @@ class UserCellTests: ZMSnapshotTestCase {
     func testTrustedGuestUser() {
         MockUser.mockSelf().isTeamMember = true
         let user = MockUser.mockUsers()[0]
-        let mockUser = MockUser(for: user)
+        let mockUser = MockUser.mockUser(for: user)
         mockUser.trusted = true
         mockUser.isGuestInConversation = true
         mockUser.feature(withUserClients: 1)

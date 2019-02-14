@@ -19,6 +19,8 @@ import Foundation
 import WireSyncEngine
 
 @objcMembers class MockUser: NSObject, UserType, Mockable {
+    var isAccountDeleted: Bool = false
+
     static var mockSelfUser: UserType! = nil
 
     var displayName: String
@@ -34,6 +36,21 @@ import WireSyncEngine
     var previewImageData: Data?
 
     var completeImageData: Data?
+
+    required init!(jsonObject: [AnyHashable : Any]!) {
+        super.init()
+
+        clients = []
+        isTeamMember = true
+        for key: String in Array((jsonObject?.keys)!) as! [String] {
+            if let value = jsonObject?[key] {
+                self.setValue(value, forKey: key)
+            } else {
+                continue
+            }
+        }
+    }
+
 
     func requestPreviewProfileImage() {
 
@@ -66,18 +83,8 @@ import WireSyncEngine
 
     }
 
-    required init!(jsonObject: [AnyHashable : Any]!) {
-        super.init()
-
-        clients = []
-        isTeamMember = true
-        for key: String in Array((jsonObject?.keys)!) as! [String] {
-            if let value = jsonObject?[key] {
-                self.setValue(value, forKey: key)
-            } else {
-                continue
-            }
-        }
+    class func mockUser(for user: ZMUser?) -> MockUser {
+        return (user as Any as! MockUser)
     }
 
     class func mockUsers() -> [ZMUser] {
@@ -118,7 +125,7 @@ import WireSyncEngine
             selfUser = mockSelf()
         }
 
-        return selfUser as Any as! (ZMUser & ZMEditableUser)
+        return (selfUser as Any as! (ZMUser & ZMEditableUser))
     }
 
     class func setMockSelf(_ newMockUser: UserType?) {
@@ -129,7 +136,7 @@ import WireSyncEngine
     var emailAddress = ""
     var phoneNumber = ""
     var handle: String?
-    var accentColorValue: ZMAccentColor?
+    var accentColorValue: ZMAccentColor = .undefined
     var isBlocked = false
     var isIgnored = false
     var isPendingApprovalByOtherUser = false
@@ -142,7 +149,7 @@ import WireSyncEngine
     var isSelfUser = false
     var isServiceUser = false
     var isTeamMember = false
-    var teamRole: TeamRole?
+    var teamRole: TeamRole = .none
     var isGuestInConversation = false
     var canManageTeam = false
     var hasTeam = false
