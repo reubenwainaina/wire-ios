@@ -18,6 +18,7 @@
 import Foundation
 import WireSyncEngine
 
+@objc(MockUser)
 @objcMembers class MockUser: NSObject, UserType, Mockable {
 
     static var mockSelfUser: UserType! = nil
@@ -30,6 +31,41 @@ import WireSyncEngine
     var mediumProfileImageCacheKey: String?
     var previewImageData: Data?
     var completeImageData: Data?
+    var name: String?
+    var emailAddress = ""
+    var phoneNumber = ""
+    var handle: String?
+    var accentColorValue: ZMAccentColor = .undefined
+    var isBlocked = false
+    var isIgnored = false
+    var isPendingApprovalByOtherUser = false
+    var isPendingApprovalBySelfUser = false
+    var isConnected = false
+    var untrusted = false
+    var trusted = false
+    var totalCommonConnections: Int = 0
+    var expiresAfter: TimeInterval = 0.0
+    var isSelfUser = false
+    var isServiceUser = false
+    var isTeamMember = false
+    var teamRole: TeamRole = .none
+    var isGuestInConversation = false
+    var canManageTeam = false
+    var hasTeam = false
+    var expirationDisplayString = ""
+    var isWirelessUser = false
+
+    var usesCompanyLogin = false
+    var readReceiptsEnabled = false
+    var user: ZMUser?
+    ///TODO:
+    //    var clients: NSSet<UserClientType> = []
+    var connection: ZMConnection?
+    var contact: ZMAddressBookContact?
+    var addressBookEntry: AddressBookEntry?
+    var remoteIdentifier: UUID?
+    var availability: Availability?
+    private(set) var clientsRequiringUserAttention: Set<UserClient> = []
 
     required init!(jsonObject: [AnyHashable : Any]!) {
         displayName = ""
@@ -116,56 +152,9 @@ import WireSyncEngine
         ])
     }
 
-    class func selfUser(in session: ZMUserSession?) -> (ZMUser & ZMEditableUser)? {
-        let selfUser: Any
-        if mockSelfUser != nil {
-            selfUser = mockSelfUser
-        } else {
-            selfUser = mockSelf()
-        }
-
-        return (selfUser as Any as! (ZMUser & ZMEditableUser))
-    }
-
     class func setMockSelf(_ newMockUser: UserType?) {
         mockSelfUser = newMockUser
     }
-
-    var name: String?
-    var emailAddress = ""
-    var phoneNumber = ""
-    var handle: String?
-    var accentColorValue: ZMAccentColor = .undefined
-    var isBlocked = false
-    var isIgnored = false
-    var isPendingApprovalByOtherUser = false
-    var isPendingApprovalBySelfUser = false
-    var isConnected = false
-    var untrusted = false
-    var trusted = false
-    var totalCommonConnections: Int = 0
-    var expiresAfter: TimeInterval = 0.0
-    var isSelfUser = false
-    var isServiceUser = false
-    var isTeamMember = false
-    var teamRole: TeamRole = .none
-    var isGuestInConversation = false
-    var canManageTeam = false
-    var hasTeam = false
-    var expirationDisplayString = ""
-    var isWirelessUser = false
-
-    var usesCompanyLogin = false
-    var readReceiptsEnabled = false
-    var user: ZMUser?
-    ///TODO:
-//    var clients: NSSet<UserClientType> = []
-    var connection: ZMConnection?
-    var contact: ZMAddressBookContact?
-    var addressBookEntry: AddressBookEntry?
-    var remoteIdentifier: UUID?
-    var availability: Availability?
-    private(set) var clientsRequiringUserAttention: Set<UserClient> = []
 
     func displayName(in conversation: MockConversation?) -> String? {
         return displayName
