@@ -20,6 +20,32 @@ import WireSyncEngine
 
 @objc(MockUser)
 @objcMembers class MockUser: NSObject, UserType, Mockable {
+    var teamName: String?
+
+    var isExpired: Bool
+
+    var canBeConnected: Bool
+
+    var richProfile: [UserRichProfileField]
+
+    var needsRichProfileUpdate: Bool
+
+    var managedByWire: Bool
+
+    var canCreateConversation: Bool
+
+    func canAccessCompanyInformation(of user: UserType) -> Bool {
+        <#code#>
+    }
+
+    func canAddUser(to conversation: ZMConversation) -> Bool {
+        <#code#>
+    }
+
+    func canRemoveUser(from conversation: ZMConversation) -> Bool {
+        <#code#>
+    }
+
 
     static var mockSelfUser: UserType! = nil
 
